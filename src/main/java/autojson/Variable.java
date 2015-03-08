@@ -39,6 +39,10 @@ final class Variable {
     private final Name name;
     private final String defaultValueSource;
 
+    Variable(ProcessingEnvironment env, TypeMirror type, Name name) {
+        this(env, type, name, Defaults.getSource(type));
+    }
+
     Variable(ProcessingEnvironment env, TypeMirror type, Name name, String defaultValueSource) {
         this.env = env;
         this.type = type;

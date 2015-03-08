@@ -1,16 +1,11 @@
 main(model) ::= <<
 <model.package:package()>
-<! TODO remove package imports and use fully qualified names to avoid breaking things that implicitly depends on them when they are being changed !>
+<!
+    No imports so that extension code don't implicitly depend on those,
+    which can cause breakage if we change the imports here later.
+!>
 
-import javax.annotation.Generated;
-import javax.json.stream.JsonLocation;
-import javax.json.stream.JsonParser;
-import javax.json.stream.JsonParser.Event;
-import javax.json.stream.JsonParsingException;
-
-import static javax.json.stream.JsonParser.Event.*;
-
-@Generated("<model.processor.class.canonicalName>")
+@javax.annotation.Generated("<model.processor.class.canonicalName>")
 public final class <model.generatedTypeName> implements autojson.bind.ValueReader\<<model.targetElementName>\> {
 
     public static final <model.generatedTypeName> INSTANCE = new <model.generatedTypeName>();
@@ -19,19 +14,22 @@ public final class <model.generatedTypeName> implements autojson.bind.ValueReade
     }
 
     @Override
-    public <model.targetElementName> read(JsonParser _parser) {
+    public <model.targetElementName> read(javax.json.stream.JsonParser _parser) {
         {
-            Event _event = _parser.next();
-            if (_event == VALUE_NULL) {
+            javax.json.stream.JsonParser.Event _event = _parser.next();
+            if (_event == javax.json.stream.JsonParser.Event.VALUE_NULL) {
                 return null;
             }
-            if (_event != START_OBJECT) {
-                throw new JsonParsingException("expected: " + START_OBJECT + " but was: " + _event, _parser.getLocation());
+            if (_event != javax.json.stream.JsonParser.Event.START_OBJECT) {
+                throw new autojson.bind.JsonBindException(
+                        "expected " + javax.json.stream.JsonParser.Event.START_OBJECT +
+                                " but was " + _event + " preceding " + _parser.getLocation(),
+                                 _parser.getLocation());
             }
         }
         <model.variables:declare(); separator="\n">
-        Event _event;
-        while ((_event = _parser.next()) != END_OBJECT) {
+        javax.json.stream.JsonParser.Event _event;
+        while ((_event = _parser.next()) != javax.json.stream.JsonParser.Event.END_OBJECT) {
             switch (_parser.getString()) {
                 <model.variables:case(); separator="\n">
                 default:
@@ -39,7 +37,7 @@ public final class <model.generatedTypeName> implements autojson.bind.ValueReade
                     break;
             }
         }
-        return new <model.autoValueTypeName>(<model.variables:name(); separator=", ">);
+        <model.creationSource>
     }
 
 }
@@ -47,15 +45,11 @@ public final class <model.generatedTypeName> implements autojson.bind.ValueReade
 >>
 
 package(package) ::= <<
-package <package>;
+<if(!package.unnamed)>package <package>;<endif>
 >>
 
 declare(var) ::= <<
 <var.type> <var.name> = <var.defaultValueSource; null="null">;
->>
-
-name(var) ::= <<
-<var.name>
 >>
 
 case(var) ::= <<

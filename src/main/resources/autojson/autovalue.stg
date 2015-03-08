@@ -1,0 +1,7 @@
+main(model) ::= <<
+return new <model.autoValueTypeName>(<model.variables:name(); separator=", ">);
+>>
+
+name(var) ::= <<
+<var.name>
+>>

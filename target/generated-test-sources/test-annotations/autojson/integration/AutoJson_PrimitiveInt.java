@@ -1,14 +1,6 @@
 package autojson.integration;
 
-import javax.annotation.Generated;
-import javax.json.stream.JsonLocation;
-import javax.json.stream.JsonParser;
-import javax.json.stream.JsonParser.Event;
-import javax.json.stream.JsonParsingException;
-
-import static javax.json.stream.JsonParser.Event.*;
-
-@Generated("autojson.AutoJsonProcessor")
+@javax.annotation.Generated("autojson.AutoJsonProcessor")
 public final class AutoJson_PrimitiveInt implements autojson.bind.ValueReader<PrimitiveInt> {
 
     public static final AutoJson_PrimitiveInt INSTANCE = new AutoJson_PrimitiveInt();
@@ -17,19 +9,22 @@ public final class AutoJson_PrimitiveInt implements autojson.bind.ValueReader<Pr
     }
 
     @Override
-    public PrimitiveInt read(JsonParser _parser) {
+    public PrimitiveInt read(javax.json.stream.JsonParser _parser) {
         {
-            Event _event = _parser.next();
-            if (_event == VALUE_NULL) {
+            javax.json.stream.JsonParser.Event _event = _parser.next();
+            if (_event == javax.json.stream.JsonParser.Event.VALUE_NULL) {
                 return null;
             }
-            if (_event != START_OBJECT) {
-                throw new JsonParsingException("expected: " + START_OBJECT + " but was: " + _event, _parser.getLocation());
+            if (_event != javax.json.stream.JsonParser.Event.START_OBJECT) {
+                throw new autojson.bind.JsonBindException(
+                        "expected " + javax.json.stream.JsonParser.Event.START_OBJECT +
+                                " but was " + _event + " preceding " + _parser.getLocation(),
+                                 _parser.getLocation());
             }
         }
         int value = 0;
-        Event _event;
-        while ((_event = _parser.next()) != END_OBJECT) {
+        javax.json.stream.JsonParser.Event _event;
+        while ((_event = _parser.next()) != javax.json.stream.JsonParser.Event.END_OBJECT) {
             switch (_parser.getString()) {
                 case "value":
                     value = autojson.bind.lang.PrimitiveIntReader.INSTANCE.read(_parser);
