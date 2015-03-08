@@ -1,5 +1,6 @@
 main(model) ::= <<
 <model.package:package()>
+<! TODO remove package imports and use fully qualified names to avoid breaking things that implicitly depends on them when they are being changed !>
 
 import javax.annotation.Generated;
 import javax.json.stream.JsonLocation;
@@ -28,17 +29,17 @@ public final class <model.generatedTypeName> implements autojson.bind.ValueReade
                 throw new JsonParsingException("expected: " + START_OBJECT + " but was: " + _event, _parser.getLocation());
             }
         }
-        <model.properties:declare(); separator="\n">
+        <model.variables:declare(); separator="\n">
         Event _event;
         while ((_event = _parser.next()) != END_OBJECT) {
             switch (_parser.getString()) {
-                <model.properties:case(); separator="\n">
+                <model.variables:case(); separator="\n">
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;
             }
         }
-        return new <model.autoValueTypeName>(<model.properties:name(); separator=", ">);
+        return new <model.autoValueTypeName>(<model.variables:name(); separator=", ">);
     }
 
 }
@@ -49,20 +50,20 @@ package(package) ::= <<
 package <package>;
 >>
 
-declare(property) ::= <<
-<property.typeName> <property.name> = <property.defaultValue; null="null">;
+declare(var) ::= <<
+<var.type> <var.name> = <var.defaultValueSource; null="null">;
 >>
 
-name(property) ::= <<
-<property.name>
+name(var) ::= <<
+<var.name>
 >>
 
-case(property) ::= <<
-case "<property.name>":
-    <if(property.autoJson)>
-    <property.name> = <property.autoJsonGeneratedTypeName>.INSTANCE.read(_parser);
+case(var) ::= <<
+case "<var.name>":
+    <if(var.autoJson)>
+    <var.name> = <var.autoJsonGeneratedTypeName>.INSTANCE.read(_parser);
     <else>
-    <property.name> = <property.readerClassName>.INSTANCE.read(_parser);
+    <var.name> = <var.readerClassName>.INSTANCE.read(_parser);
     <endif>
     break;
 >>
