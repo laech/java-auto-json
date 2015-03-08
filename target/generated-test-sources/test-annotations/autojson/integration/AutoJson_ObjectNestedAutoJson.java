@@ -31,10 +31,9 @@ public final class AutoJson_ObjectNestedAutoJson implements autojson.bind.ValueR
         Event _event;
         while ((_event = _parser.next()) != END_OBJECT) {
             switch (_parser.getString()) {
-                case "value": {
+                case "value":
                     value = AutoJson_ObjectString.INSTANCE.read(_parser);
                     break;
-                }
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;

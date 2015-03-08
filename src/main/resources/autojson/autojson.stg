@@ -58,12 +58,11 @@ name(property) ::= <<
 >>
 
 case(property) ::= <<
-case "<property.name>": {
+case "<property.name>":
     <if(property.autoJson)>
     <property.name> = <property.autoJsonGeneratedTypeName>.INSTANCE.read(_parser);
     <else>
     <property.name> = <property.readerClassName>.INSTANCE.read(_parser);
     <endif>
     break;
-}
 >>

@@ -31,10 +31,9 @@ public final class AutoJson_ObjectLong implements autojson.bind.ValueReader<Obje
         Event _event;
         while ((_event = _parser.next()) != END_OBJECT) {
             switch (_parser.getString()) {
-                case "value": {
+                case "value":
                     value = autojson.bind.lang.LongReader.INSTANCE.read(_parser);
                     break;
-                }
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;

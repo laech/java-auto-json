@@ -35,26 +35,21 @@ public final class AutoJson_Primitives implements autojson.bind.ValueReader<Prim
         Event _event;
         while ((_event = _parser.next()) != END_OBJECT) {
             switch (_parser.getString()) {
-                case "intValue": {
+                case "intValue":
                     intValue = autojson.bind.lang.PrimitiveIntReader.INSTANCE.read(_parser);
                     break;
-                }
-                case "longValue": {
+                case "longValue":
                     longValue = autojson.bind.lang.PrimitiveLongReader.INSTANCE.read(_parser);
                     break;
-                }
-                case "decimalValue": {
+                case "decimalValue":
                     decimalValue = autojson.bind.math.BigDecimalReader.INSTANCE.read(_parser);
                     break;
-                }
-                case "booleanValue": {
+                case "booleanValue":
                     booleanValue = autojson.bind.lang.PrimitiveBooleanReader.INSTANCE.read(_parser);
                     break;
-                }
-                case "stringValue": {
+                case "stringValue":
                     stringValue = autojson.bind.lang.StringReader.INSTANCE.read(_parser);
                     break;
-                }
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;

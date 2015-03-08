@@ -33,18 +33,15 @@ public final class AutoJson_ObjectNestedAutoJsonMulti implements autojson.bind.V
         Event _event;
         while ((_event = _parser.next()) != END_OBJECT) {
             switch (_parser.getString()) {
-                case "stringValue": {
+                case "stringValue":
                     stringValue = AutoJson_ObjectString.INSTANCE.read(_parser);
                     break;
-                }
-                case "intValue": {
+                case "intValue":
                     intValue = AutoJson_PrimitiveInt.INSTANCE.read(_parser);
                     break;
-                }
-                case "longValue": {
+                case "longValue":
                     longValue = autojson.bind.lang.PrimitiveLongReader.INSTANCE.read(_parser);
                     break;
-                }
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;

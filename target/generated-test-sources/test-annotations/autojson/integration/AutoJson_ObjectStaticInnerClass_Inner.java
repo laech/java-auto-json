@@ -31,10 +31,9 @@ public final class AutoJson_ObjectStaticInnerClass_Inner implements autojson.bin
         Event _event;
         while ((_event = _parser.next()) != END_OBJECT) {
             switch (_parser.getString()) {
-                case "value": {
+                case "value":
                     value = autojson.bind.lang.StringReader.INSTANCE.read(_parser);
                     break;
-                }
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;

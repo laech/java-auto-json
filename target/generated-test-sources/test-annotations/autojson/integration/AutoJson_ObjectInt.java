@@ -31,10 +31,9 @@ public final class AutoJson_ObjectInt implements autojson.bind.ValueReader<Objec
         Event _event;
         while ((_event = _parser.next()) != END_OBJECT) {
             switch (_parser.getString()) {
-                case "value": {
+                case "value":
                     value = autojson.bind.lang.IntegerReader.INSTANCE.read(_parser);
                     break;
-                }
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;
