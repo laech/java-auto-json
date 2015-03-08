@@ -30,8 +30,7 @@ final class TemplateModel {
      * includes the enclosing class name if it is a static inner element.
      */
     public Name getTargetElementName() {
-        Elements util = getProcessor().getProcessingEnvironment().getElementUtils();
-        return util.getName(getQualifiedNameWithoutPackage(getPackage(), getTargetElement()));
+        return getElementUtils().getName(getQualifiedNameWithoutPackage(getPackage(), getTargetElement()));
     }
 
     public AutoJsonProcessor getProcessor() {
@@ -46,17 +45,21 @@ final class TemplateModel {
     }
 
     public Name getGeneratedTypeName() {
-        Elements util = getProcessor().getProcessingEnvironment().getElementUtils();
-        return util.getName("AutoJson_" + getTargetElementName().toString().replaceAll("\\.", "_"));
+        return getElementUtils().getName(getGeneratedTypeName(getPackage(), getTargetElement()));
     }
 
-    public Name getAutoValueTypeName() {
-        Elements util = getProcessor().getProcessingEnvironment().getElementUtils();
-        return util.getName("AutoValue_" + getTargetElementName().toString().replaceAll("\\.", "_"));
+    public Name getGeneratedQualifiedTypeName() {
+        Name name = getGeneratedTypeName();
+        PackageElement pkg = getPackage();
+        return pkg.isUnnamed() ? name : getElementUtils().getName(pkg.getQualifiedName() + "." + name);
     }
 
     static String getGeneratedTypeName(PackageElement pkg, TypeElement element) {
         return "AutoJson_" + getQualifiedNameWithoutPackage(pkg, element).replaceAll("\\.", "_");
+    }
+
+    private Elements getElementUtils() {
+        return getProcessor().getProcessingEnvironment().getElementUtils();
     }
 
     public List<Variable> getVariables() {
