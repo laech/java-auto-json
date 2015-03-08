@@ -35,7 +35,6 @@ public final class AutoJson_PrimitiveInt implements autojson.bind.ValueReader<Pr
                     value = autojson.bind.lang.PrimitiveIntReader.INSTANCE.read(_parser);
                     break;
                 }
-
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;

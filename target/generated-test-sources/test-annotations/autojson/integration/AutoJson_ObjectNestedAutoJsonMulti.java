@@ -45,7 +45,6 @@ public final class AutoJson_ObjectNestedAutoJsonMulti implements autojson.bind.V
                     longValue = autojson.bind.lang.PrimitiveLongReader.INSTANCE.read(_parser);
                     break;
                 }
-
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;

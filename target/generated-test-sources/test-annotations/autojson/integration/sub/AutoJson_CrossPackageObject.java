@@ -35,7 +35,6 @@ public final class AutoJson_CrossPackageObject implements autojson.bind.ValueRea
                     value = autojson.bind.lang.PrimitiveIntReader.INSTANCE.read(_parser);
                     break;
                 }
-
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;

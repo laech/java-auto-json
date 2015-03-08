@@ -55,7 +55,6 @@ public final class AutoJson_Primitives implements autojson.bind.ValueReader<Prim
                     stringValue = autojson.bind.lang.StringReader.INSTANCE.read(_parser);
                     break;
                 }
-
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;

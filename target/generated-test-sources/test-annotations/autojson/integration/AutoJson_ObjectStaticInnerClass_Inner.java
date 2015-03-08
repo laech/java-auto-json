@@ -35,7 +35,6 @@ public final class AutoJson_ObjectStaticInnerClass_Inner implements autojson.bin
                     value = autojson.bind.lang.StringReader.INSTANCE.read(_parser);
                     break;
                 }
-
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;

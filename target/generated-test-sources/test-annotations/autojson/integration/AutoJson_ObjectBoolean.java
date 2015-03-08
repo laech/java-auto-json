@@ -35,7 +35,6 @@ public final class AutoJson_ObjectBoolean implements autojson.bind.ValueReader<O
                     value = autojson.bind.lang.BooleanReader.INSTANCE.read(_parser);
                     break;
                 }
-
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;

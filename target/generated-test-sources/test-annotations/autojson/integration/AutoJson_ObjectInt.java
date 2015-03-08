@@ -35,7 +35,6 @@ public final class AutoJson_ObjectInt implements autojson.bind.ValueReader<Objec
                     value = autojson.bind.lang.IntegerReader.INSTANCE.read(_parser);
                     break;
                 }
-
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;

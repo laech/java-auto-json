@@ -35,7 +35,6 @@ public final class AutoJson_PrimitiveBoolean implements autojson.bind.ValueReade
                     value = autojson.bind.lang.PrimitiveBooleanReader.INSTANCE.read(_parser);
                     break;
                 }
-
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;

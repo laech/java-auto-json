@@ -35,7 +35,6 @@ public final class AutoJson_ObjectNestedAutoJson implements autojson.bind.ValueR
                     value = AutoJson_ObjectString.INSTANCE.read(_parser);
                     break;
                 }
-
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;

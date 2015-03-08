@@ -35,7 +35,6 @@ public final class AutoJson_ObjectLong implements autojson.bind.ValueReader<Obje
                     value = autojson.bind.lang.LongReader.INSTANCE.read(_parser);
                     break;
                 }
-
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;

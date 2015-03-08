@@ -32,7 +32,7 @@ public final class <model.generatedTypeName> implements autojson.bind.ValueReade
         Event _event;
         while ((_event = _parser.next()) != END_OBJECT) {
             switch (_parser.getString()) {
-                <model.properties:case()>
+                <model.properties:case(); separator="\n">
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;
@@ -66,5 +66,4 @@ case "<property.name>": {
     <endif>
     break;
 }
-
 >>

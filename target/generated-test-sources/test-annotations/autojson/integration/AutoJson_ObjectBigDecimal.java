@@ -35,7 +35,6 @@ public final class AutoJson_ObjectBigDecimal implements autojson.bind.ValueReade
                     value = autojson.bind.math.BigDecimalReader.INSTANCE.read(_parser);
                     break;
                 }
-
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;

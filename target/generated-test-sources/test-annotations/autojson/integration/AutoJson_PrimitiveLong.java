@@ -35,7 +35,6 @@ public final class AutoJson_PrimitiveLong implements autojson.bind.ValueReader<P
                     value = autojson.bind.lang.PrimitiveLongReader.INSTANCE.read(_parser);
                     break;
                 }
-
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;
