@@ -1,0 +1,6 @@
+.*
+*.iml
+
+# Keep all the generated AutoJson classes for diffing when changing generator
+target/**/*.*
+!target/**/AutoJson_*.java

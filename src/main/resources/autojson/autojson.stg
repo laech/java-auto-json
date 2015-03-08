@@ -1,0 +1,70 @@
+main(model) ::= <<
+<model.package:package()>
+
+import javax.annotation.Generated;
+import javax.json.stream.JsonLocation;
+import javax.json.stream.JsonParser;
+import javax.json.stream.JsonParser.Event;
+import javax.json.stream.JsonParsingException;
+
+import static javax.json.stream.JsonParser.Event.*;
+
+@Generated("<model.processor.class.canonicalName>")
+public final class <model.generatedTypeName> implements autojson.bind.ValueReader\<<model.targetElementName>\> {
+
+    public static final <model.generatedTypeName> INSTANCE = new <model.generatedTypeName>();
+
+    <model.generatedTypeName>() {
+    }
+
+    @Override
+    public <model.targetElementName> read(JsonParser _parser) {
+        {
+            Event _event = _parser.next();
+            if (_event == VALUE_NULL) {
+                return null;
+            }
+            if (_event != START_OBJECT) {
+                throw new JsonParsingException("expected: " + START_OBJECT + " but was: " + _event, _parser.getLocation());
+            }
+        }
+        <model.properties:declare(); separator="\n">
+        Event _event;
+        while ((_event = _parser.next()) != END_OBJECT) {
+            switch (_parser.getString()) {
+                <model.properties:case()>
+                default:
+                    autojson.JsonParsers.skipTree(_parser);
+                    break;
+            }
+        }
+        return new <model.autoValueTypeName>(<model.properties:name(); separator=", ">);
+    }
+
+}
+
+>>
+
+package(package) ::= <<
+package <package>;
+>>
+
+declare(property) ::= <<
+<property.typeName> <property.name> = <property.defaultValue; null="null">;
+>>
+
+name(property) ::= <<
+<property.name>
+>>
+
+case(property) ::= <<
+case "<property.name>": {
+    <if(property.autoJson)>
+    <property.name> = <property.autoJsonGeneratedTypeName>.INSTANCE.read(_parser);
+    <else>
+    <property.name> = <property.readerClassName>.INSTANCE.read(_parser);
+    <endif>
+    break;
+}
+
+>>
