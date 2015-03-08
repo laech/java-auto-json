@@ -56,7 +56,8 @@ public final class AutoJsonProcessor extends AbstractProcessor {
                 process((TypeElement) element);
             } catch (EarlyReturnException e) {
                 // Message has been printed by thrower
-            } catch (IOException e) {
+            } catch (Exception e) {
+                // Make better error message for all exceptions
                 StringWriter writer = new StringWriter();
                 e.printStackTrace(new PrintWriter(writer));
                 processingEnv.getMessager().printMessage(ERROR, writer.toString(), element);
