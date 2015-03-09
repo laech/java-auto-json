@@ -3,11 +3,6 @@ package autojson.integration;
 @javax.annotation.Generated("autojson.AutoJsonProcessor")
 public final class AutoJson_ObjectNestedAutoJson implements autojson.bind.ValueReader<ObjectNestedAutoJson> {
 
-    public static final AutoJson_ObjectNestedAutoJson INSTANCE = new AutoJson_ObjectNestedAutoJson();
-
-    AutoJson_ObjectNestedAutoJson() {
-    }
-
     @Override
     public ObjectNestedAutoJson read(javax.json.stream.JsonParser _parser) {
         {
@@ -23,12 +18,17 @@ public final class AutoJson_ObjectNestedAutoJson implements autojson.bind.ValueR
             }
         }
         autojson.integration.ObjectString value = null;
-        javax.json.stream.JsonParser.Event _event;
-        while ((_event = _parser.next()) != javax.json.stream.JsonParser.Event.END_OBJECT) {
+        while (_parser.next() != javax.json.stream.JsonParser.Event.END_OBJECT) {
             switch (_parser.getString()) {
-                case "value":
-                    value = AutoJson_ObjectString.INSTANCE.read(_parser);
+                case "value": {
+                    AutoJson_ObjectString _reader = autojson.bind.ReaderCache.getCachedReader(AutoJson_ObjectString.class);
+                    if (_reader == null) {
+                        _reader = new AutoJson_ObjectString();
+                        autojson.bind.ReaderCache.putCachedReader(_reader);
+                    }
+                    value = _reader.read(_parser);
                     break;
+                }
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;

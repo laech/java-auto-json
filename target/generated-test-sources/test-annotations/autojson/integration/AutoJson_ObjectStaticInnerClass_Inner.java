@@ -3,11 +3,6 @@ package autojson.integration;
 @javax.annotation.Generated("autojson.AutoJsonProcessor")
 public final class AutoJson_ObjectStaticInnerClass_Inner implements autojson.bind.ValueReader<ObjectStaticInnerClass.Inner> {
 
-    public static final AutoJson_ObjectStaticInnerClass_Inner INSTANCE = new AutoJson_ObjectStaticInnerClass_Inner();
-
-    AutoJson_ObjectStaticInnerClass_Inner() {
-    }
-
     @Override
     public ObjectStaticInnerClass.Inner read(javax.json.stream.JsonParser _parser) {
         {
@@ -23,12 +18,17 @@ public final class AutoJson_ObjectStaticInnerClass_Inner implements autojson.bin
             }
         }
         java.lang.String value = null;
-        javax.json.stream.JsonParser.Event _event;
-        while ((_event = _parser.next()) != javax.json.stream.JsonParser.Event.END_OBJECT) {
+        while (_parser.next() != javax.json.stream.JsonParser.Event.END_OBJECT) {
             switch (_parser.getString()) {
-                case "value":
-                    value = autojson.bind.lang.StringReader.INSTANCE.read(_parser);
+                case "value": {
+                    autojson.bind.lang.StringReader _reader = autojson.bind.ReaderCache.getCachedReader(autojson.bind.lang.StringReader.class);
+                    if (_reader == null) {
+                        _reader = new autojson.bind.lang.StringReader();
+                        autojson.bind.ReaderCache.putCachedReader(_reader);
+                    }
+                    value = _reader.read(_parser);
                     break;
+                }
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;

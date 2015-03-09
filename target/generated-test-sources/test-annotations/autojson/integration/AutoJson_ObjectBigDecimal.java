@@ -3,11 +3,6 @@ package autojson.integration;
 @javax.annotation.Generated("autojson.AutoJsonProcessor")
 public final class AutoJson_ObjectBigDecimal implements autojson.bind.ValueReader<ObjectBigDecimal> {
 
-    public static final AutoJson_ObjectBigDecimal INSTANCE = new AutoJson_ObjectBigDecimal();
-
-    AutoJson_ObjectBigDecimal() {
-    }
-
     @Override
     public ObjectBigDecimal read(javax.json.stream.JsonParser _parser) {
         {
@@ -23,12 +18,17 @@ public final class AutoJson_ObjectBigDecimal implements autojson.bind.ValueReade
             }
         }
         java.math.BigDecimal value = null;
-        javax.json.stream.JsonParser.Event _event;
-        while ((_event = _parser.next()) != javax.json.stream.JsonParser.Event.END_OBJECT) {
+        while (_parser.next() != javax.json.stream.JsonParser.Event.END_OBJECT) {
             switch (_parser.getString()) {
-                case "value":
-                    value = autojson.bind.math.BigDecimalReader.INSTANCE.read(_parser);
+                case "value": {
+                    autojson.bind.math.BigDecimalReader _reader = autojson.bind.ReaderCache.getCachedReader(autojson.bind.math.BigDecimalReader.class);
+                    if (_reader == null) {
+                        _reader = new autojson.bind.math.BigDecimalReader();
+                        autojson.bind.ReaderCache.putCachedReader(_reader);
+                    }
+                    value = _reader.read(_parser);
                     break;
+                }
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;

@@ -3,11 +3,6 @@ package autojson.integration;
 @javax.annotation.Generated("autojson.AutoJsonProcessor")
 public final class AutoJson_ObjectNestedAutoJsonMulti implements autojson.bind.ValueReader<ObjectNestedAutoJsonMulti> {
 
-    public static final AutoJson_ObjectNestedAutoJsonMulti INSTANCE = new AutoJson_ObjectNestedAutoJsonMulti();
-
-    AutoJson_ObjectNestedAutoJsonMulti() {
-    }
-
     @Override
     public ObjectNestedAutoJsonMulti read(javax.json.stream.JsonParser _parser) {
         {
@@ -25,18 +20,35 @@ public final class AutoJson_ObjectNestedAutoJsonMulti implements autojson.bind.V
         autojson.integration.ObjectString stringValue = null;
         autojson.integration.PrimitiveInt intValue = null;
         long longValue = 0L;
-        javax.json.stream.JsonParser.Event _event;
-        while ((_event = _parser.next()) != javax.json.stream.JsonParser.Event.END_OBJECT) {
+        while (_parser.next() != javax.json.stream.JsonParser.Event.END_OBJECT) {
             switch (_parser.getString()) {
-                case "stringValue":
-                    stringValue = AutoJson_ObjectString.INSTANCE.read(_parser);
+                case "stringValue": {
+                    AutoJson_ObjectString _reader = autojson.bind.ReaderCache.getCachedReader(AutoJson_ObjectString.class);
+                    if (_reader == null) {
+                        _reader = new AutoJson_ObjectString();
+                        autojson.bind.ReaderCache.putCachedReader(_reader);
+                    }
+                    stringValue = _reader.read(_parser);
                     break;
-                case "intValue":
-                    intValue = AutoJson_PrimitiveInt.INSTANCE.read(_parser);
+                }
+                case "intValue": {
+                    AutoJson_PrimitiveInt _reader = autojson.bind.ReaderCache.getCachedReader(AutoJson_PrimitiveInt.class);
+                    if (_reader == null) {
+                        _reader = new AutoJson_PrimitiveInt();
+                        autojson.bind.ReaderCache.putCachedReader(_reader);
+                    }
+                    intValue = _reader.read(_parser);
                     break;
-                case "longValue":
-                    longValue = autojson.bind.lang.PrimitiveLongReader.INSTANCE.read(_parser);
+                }
+                case "longValue": {
+                    autojson.bind.lang.PrimitiveLongReader _reader = autojson.bind.ReaderCache.getCachedReader(autojson.bind.lang.PrimitiveLongReader.class);
+                    if (_reader == null) {
+                        _reader = new autojson.bind.lang.PrimitiveLongReader();
+                        autojson.bind.ReaderCache.putCachedReader(_reader);
+                    }
+                    longValue = _reader.read(_parser);
                     break;
+                }
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;

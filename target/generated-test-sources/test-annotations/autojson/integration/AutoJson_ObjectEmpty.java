@@ -3,11 +3,6 @@ package autojson.integration;
 @javax.annotation.Generated("autojson.AutoJsonProcessor")
 public final class AutoJson_ObjectEmpty implements autojson.bind.ValueReader<ObjectEmpty> {
 
-    public static final AutoJson_ObjectEmpty INSTANCE = new AutoJson_ObjectEmpty();
-
-    AutoJson_ObjectEmpty() {
-    }
-
     @Override
     public ObjectEmpty read(javax.json.stream.JsonParser _parser) {
         {
@@ -22,8 +17,7 @@ public final class AutoJson_ObjectEmpty implements autojson.bind.ValueReader<Obj
                                  _parser.getLocation());
             }
         }
-        javax.json.stream.JsonParser.Event _event;
-        while ((_event = _parser.next()) != javax.json.stream.JsonParser.Event.END_OBJECT) {
+        while (_parser.next() != javax.json.stream.JsonParser.Event.END_OBJECT) {
             switch (_parser.getString()) {
                 default:
                     autojson.JsonParsers.skipTree(_parser);

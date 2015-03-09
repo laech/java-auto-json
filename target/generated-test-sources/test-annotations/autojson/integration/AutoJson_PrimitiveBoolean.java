@@ -3,11 +3,6 @@ package autojson.integration;
 @javax.annotation.Generated("autojson.AutoJsonProcessor")
 public final class AutoJson_PrimitiveBoolean implements autojson.bind.ValueReader<PrimitiveBoolean> {
 
-    public static final AutoJson_PrimitiveBoolean INSTANCE = new AutoJson_PrimitiveBoolean();
-
-    AutoJson_PrimitiveBoolean() {
-    }
-
     @Override
     public PrimitiveBoolean read(javax.json.stream.JsonParser _parser) {
         {
@@ -23,12 +18,17 @@ public final class AutoJson_PrimitiveBoolean implements autojson.bind.ValueReade
             }
         }
         boolean value = false;
-        javax.json.stream.JsonParser.Event _event;
-        while ((_event = _parser.next()) != javax.json.stream.JsonParser.Event.END_OBJECT) {
+        while (_parser.next() != javax.json.stream.JsonParser.Event.END_OBJECT) {
             switch (_parser.getString()) {
-                case "value":
-                    value = autojson.bind.lang.PrimitiveBooleanReader.INSTANCE.read(_parser);
+                case "value": {
+                    autojson.bind.lang.PrimitiveBooleanReader _reader = autojson.bind.ReaderCache.getCachedReader(autojson.bind.lang.PrimitiveBooleanReader.class);
+                    if (_reader == null) {
+                        _reader = new autojson.bind.lang.PrimitiveBooleanReader();
+                        autojson.bind.ReaderCache.putCachedReader(_reader);
+                    }
+                    value = _reader.read(_parser);
                     break;
+                }
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;

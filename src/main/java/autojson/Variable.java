@@ -66,16 +66,20 @@ final class Variable {
         return (TypeElement) env.getTypeUtils().asElement(getType());
     }
 
-    public boolean isAutoJson() {
+    private boolean isAutoJson() {
         TypeElement type = getTypeElement();
         return type != null && type.getAnnotation(AutoJson.class) != null;
     }
 
     public String getReaderClassName() {
-        return readers.get(getType().toString());
+        if (isAutoJson()) {
+            return getAutoJsonGeneratedTypeName().toString();
+        } else {
+            return readers.get(getType().toString());
+        }
     }
 
-    public Name getAutoJsonGeneratedTypeName() {
+    private Name getAutoJsonGeneratedTypeName() {
         Elements util = env.getElementUtils();
         TypeElement type = getTypeElement();
         return util.getName(getGeneratedTypeName(util.getPackageOf(type), type));

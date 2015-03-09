@@ -12,7 +12,7 @@ public final class ObjectInDefaultPackageTest {
     public void objectInDefaultPackage() throws Exception {
         JsonParser parser = Json.createParser(new StringReader("{\"value\":\"hello\"}"));
         ObjectInDefaultPackage expected = ObjectInDefaultPackage.create("hello");
-        ObjectInDefaultPackage actual = AutoJson_ObjectInDefaultPackage.INSTANCE.read(parser);
+        ObjectInDefaultPackage actual = new AutoJson_ObjectInDefaultPackage().read(parser);
         assertEquals(expected, actual);
     }
 

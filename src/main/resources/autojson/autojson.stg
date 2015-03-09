@@ -8,11 +8,6 @@ main(model) ::= <<
 @javax.annotation.Generated("<model.processor.class.canonicalName>")
 public final class <model.generatedTypeName> implements autojson.bind.ValueReader\<<model.targetElementName>\> {
 
-    public static final <model.generatedTypeName> INSTANCE = new <model.generatedTypeName>();
-
-    <model.generatedTypeName>() {
-    }
-
     @Override
     public <model.targetElementName> read(javax.json.stream.JsonParser _parser) {
         {
@@ -28,8 +23,7 @@ public final class <model.generatedTypeName> implements autojson.bind.ValueReade
             }
         }
         <model.variables:declare(); separator="\n">
-        javax.json.stream.JsonParser.Event _event;
-        while ((_event = _parser.next()) != javax.json.stream.JsonParser.Event.END_OBJECT) {
+        while (_parser.next() != javax.json.stream.JsonParser.Event.END_OBJECT) {
             switch (_parser.getString()) {
                 <model.variables:case(); separator="\n">
                 default:
@@ -45,7 +39,7 @@ public final class <model.generatedTypeName> implements autojson.bind.ValueReade
 >>
 
 package(package) ::= <<
-<if(!package.unnamed)>package <package>;<endif>
+<if(!package.unnamed)>package <package.qualifiedName>;<endif>
 >>
 
 declare(var) ::= <<
@@ -53,11 +47,13 @@ declare(var) ::= <<
 >>
 
 case(var) ::= <<
-case "<var.name>":
-    <if(var.autoJson)>
-    <var.name> = <var.autoJsonGeneratedTypeName>.INSTANCE.read(_parser);
-    <else>
-    <var.name> = <var.readerClassName>.INSTANCE.read(_parser);
-    <endif>
+case "<var.name>": {
+    <var.readerClassName> _reader = autojson.bind.ReaderCache.getCachedReader(<var.readerClassName>.class);
+    if (_reader == null) {
+        _reader = new <var.readerClassName>();
+        autojson.bind.ReaderCache.putCachedReader(_reader);
+    }
+    <var.name> = _reader.read(_parser);
     break;
+}
 >>

@@ -32,43 +32,43 @@ public final class ParsingTest {
     public static Collection<Object[]> data() {
         return asList(new Object[][]{
 
-                {new AutoValue_PrimitiveInt(0), AutoJson_PrimitiveInt.INSTANCE, "{\"value\":0}"},
-                {new AutoValue_PrimitiveInt(Integer.MAX_VALUE), AutoJson_PrimitiveInt.INSTANCE, "{\"value\":" + Integer.MAX_VALUE + "}"},
-                {new AutoValue_PrimitiveInt(Integer.MIN_VALUE), AutoJson_PrimitiveInt.INSTANCE, "{\"value\":" + Integer.MIN_VALUE + "}"},
+                {new AutoValue_PrimitiveInt(0), new AutoJson_PrimitiveInt(), "{\"value\":0}"},
+                {new AutoValue_PrimitiveInt(Integer.MAX_VALUE), new AutoJson_PrimitiveInt(), "{\"value\":" + Integer.MAX_VALUE + "}"},
+                {new AutoValue_PrimitiveInt(Integer.MIN_VALUE), new AutoJson_PrimitiveInt(), "{\"value\":" + Integer.MIN_VALUE + "}"},
 
-                {new AutoValue_ObjectInt(null), AutoJson_ObjectInt.INSTANCE, "{\"value\":null}"},
-                {new AutoValue_ObjectInt(0), AutoJson_ObjectInt.INSTANCE, "{\"value\":0}"},
-                {new AutoValue_ObjectInt(Integer.MAX_VALUE), AutoJson_ObjectInt.INSTANCE, "{\"value\":" + Integer.MAX_VALUE + "}"},
-                {new AutoValue_ObjectInt(Integer.MIN_VALUE), AutoJson_ObjectInt.INSTANCE, "{\"value\":" + Integer.MIN_VALUE + "}"},
+                {new AutoValue_ObjectInt(null), new AutoJson_ObjectInt(), "{\"value\":null}"},
+                {new AutoValue_ObjectInt(0), new AutoJson_ObjectInt(), "{\"value\":0}"},
+                {new AutoValue_ObjectInt(Integer.MAX_VALUE), new AutoJson_ObjectInt(), "{\"value\":" + Integer.MAX_VALUE + "}"},
+                {new AutoValue_ObjectInt(Integer.MIN_VALUE), new AutoJson_ObjectInt(), "{\"value\":" + Integer.MIN_VALUE + "}"},
 
-                {new AutoValue_PrimitiveLong(0), AutoJson_PrimitiveLong.INSTANCE, "{\"value\":0}"},
-                {new AutoValue_PrimitiveLong(Long.MAX_VALUE), AutoJson_PrimitiveLong.INSTANCE, "{\"value\":" + Long.MAX_VALUE + "}"},
-                {new AutoValue_PrimitiveLong(Long.MIN_VALUE), AutoJson_PrimitiveLong.INSTANCE, "{\"value\":" + Long.MIN_VALUE + "}"},
+                {new AutoValue_PrimitiveLong(0), new AutoJson_PrimitiveLong(), "{\"value\":0}"},
+                {new AutoValue_PrimitiveLong(Long.MAX_VALUE), new AutoJson_PrimitiveLong(), "{\"value\":" + Long.MAX_VALUE + "}"},
+                {new AutoValue_PrimitiveLong(Long.MIN_VALUE), new AutoJson_PrimitiveLong(), "{\"value\":" + Long.MIN_VALUE + "}"},
 
-                {new AutoValue_ObjectLong(null), AutoJson_ObjectLong.INSTANCE, "{\"value\":null}"},
-                {new AutoValue_ObjectLong(0L), AutoJson_ObjectLong.INSTANCE, "{\"value\":0}"},
-                {new AutoValue_ObjectLong(Long.MAX_VALUE), AutoJson_ObjectLong.INSTANCE, "{\"value\":" + Long.MAX_VALUE + "}"},
-                {new AutoValue_ObjectLong(Long.MIN_VALUE), AutoJson_ObjectLong.INSTANCE, "{\"value\":" + Long.MIN_VALUE + "}"},
+                {new AutoValue_ObjectLong(null), new AutoJson_ObjectLong(), "{\"value\":null}"},
+                {new AutoValue_ObjectLong(0L), new AutoJson_ObjectLong(), "{\"value\":0}"},
+                {new AutoValue_ObjectLong(Long.MAX_VALUE), new AutoJson_ObjectLong(), "{\"value\":" + Long.MAX_VALUE + "}"},
+                {new AutoValue_ObjectLong(Long.MIN_VALUE), new AutoJson_ObjectLong(), "{\"value\":" + Long.MIN_VALUE + "}"},
 
-                {new AutoValue_PrimitiveBoolean(false), AutoJson_PrimitiveBoolean.INSTANCE, "{\"value\":false}"},
-                {new AutoValue_PrimitiveBoolean(true), AutoJson_PrimitiveBoolean.INSTANCE, "{\"value\":true}"},
+                {new AutoValue_PrimitiveBoolean(false), new AutoJson_PrimitiveBoolean(), "{\"value\":false}"},
+                {new AutoValue_PrimitiveBoolean(true), new AutoJson_PrimitiveBoolean(), "{\"value\":true}"},
 
-                {new AutoValue_ObjectBoolean(null), AutoJson_ObjectBoolean.INSTANCE, "{\"value\":null}"},
-                {new AutoValue_ObjectBoolean(false), AutoJson_ObjectBoolean.INSTANCE, "{\"value\":false}"},
-                {new AutoValue_ObjectBoolean(true), AutoJson_ObjectBoolean.INSTANCE, "{\"value\":true}"},
+                {new AutoValue_ObjectBoolean(null), new AutoJson_ObjectBoolean(), "{\"value\":null}"},
+                {new AutoValue_ObjectBoolean(false), new AutoJson_ObjectBoolean(), "{\"value\":false}"},
+                {new AutoValue_ObjectBoolean(true), new AutoJson_ObjectBoolean(), "{\"value\":true}"},
 
-                {new AutoValue_ObjectString(""), AutoJson_ObjectString.INSTANCE, "{\"value\":\"\"}"},
-                {new AutoValue_ObjectString("hello"), AutoJson_ObjectString.INSTANCE, "{\"value\":\"hello\"}"},
-                {new AutoValue_ObjectString(null), AutoJson_ObjectString.INSTANCE, "{\"value\":null}"},
+                {new AutoValue_ObjectString(""), new AutoJson_ObjectString(), "{\"value\":\"\"}"},
+                {new AutoValue_ObjectString("hello"), new AutoJson_ObjectString(), "{\"value\":\"hello\"}"},
+                {new AutoValue_ObjectString(null), new AutoJson_ObjectString(), "{\"value\":null}"},
 
-                {new AutoValue_ObjectBigDecimal(new BigDecimal("0")), AutoJson_ObjectBigDecimal.INSTANCE, "{\"value\":0}"},
-                {new AutoValue_ObjectBigDecimal(new BigDecimal("9.9")), AutoJson_ObjectBigDecimal.INSTANCE, "{\"value\":9.9}"},
-                {new AutoValue_ObjectBigDecimal(new BigDecimal("-0.3")), AutoJson_ObjectBigDecimal.INSTANCE, "{\"value\":-0.3}"},
-                {new AutoValue_ObjectBigDecimal(new BigDecimal("1e10")), AutoJson_ObjectBigDecimal.INSTANCE, "{\"value\":1e10}"},
-                {new AutoValue_ObjectBigDecimal(new BigDecimal("1e100")), AutoJson_ObjectBigDecimal.INSTANCE, "{\"value\":1e100}"},
+                {new AutoValue_ObjectBigDecimal(new BigDecimal("0")), new AutoJson_ObjectBigDecimal(), "{\"value\":0}"},
+                {new AutoValue_ObjectBigDecimal(new BigDecimal("9.9")), new AutoJson_ObjectBigDecimal(), "{\"value\":9.9}"},
+                {new AutoValue_ObjectBigDecimal(new BigDecimal("-0.3")), new AutoJson_ObjectBigDecimal(), "{\"value\":-0.3}"},
+                {new AutoValue_ObjectBigDecimal(new BigDecimal("1e10")), new AutoJson_ObjectBigDecimal(), "{\"value\":1e10}"},
+                {new AutoValue_ObjectBigDecimal(new BigDecimal("1e100")), new AutoJson_ObjectBigDecimal(), "{\"value\":1e100}"},
 
-                {new AutoValue_ObjectNestedAutoJson(null), AutoJson_ObjectNestedAutoJson.INSTANCE, "{\"value\":null}"},
-                {new AutoValue_ObjectNestedAutoJson(new AutoValue_ObjectString("a")), AutoJson_ObjectNestedAutoJson.INSTANCE, "{\"value\":{\"value\":\"a\"}}"},
+                {new AutoValue_ObjectNestedAutoJson(null), new AutoJson_ObjectNestedAutoJson(), "{\"value\":null}"},
+                {new AutoValue_ObjectNestedAutoJson(new AutoValue_ObjectString("a")), new AutoJson_ObjectNestedAutoJson(), "{\"value\":{\"value\":\"a\"}}"},
 
                 {
                         new AutoValue_ObjectNestedAutoJsonMulti(
@@ -76,7 +76,7 @@ public final class ParsingTest {
                                 new AutoValue_PrimitiveInt(1),
                                 100L
                         ),
-                        AutoJson_ObjectNestedAutoJsonMulti.INSTANCE, "" +
+                        new AutoJson_ObjectNestedAutoJsonMulti(), "" +
                         "\n{" +
                         "\n  \"stringValue\": {" +
                         "\n      \"value\": \"a\"" +
@@ -88,14 +88,14 @@ public final class ParsingTest {
                         "\n}"
                 },
 
-                {new AutoValue_ObjectEmpty(), AutoJson_ObjectEmpty.INSTANCE, "{}"},
-                {new AutoValue_ObjectStaticInnerClass_Inner("hello world"), AutoJson_ObjectStaticInnerClass_Inner.INSTANCE, "{\"value\":\"hello world\"}"},
-                {CrossPackageObject.create(101), AutoJson_CrossPackageObject.INSTANCE, "{\"value\":101}"},
+                {new AutoValue_ObjectEmpty(), new AutoJson_ObjectEmpty(), "{}"},
+                {new AutoValue_ObjectStaticInnerClass_Inner("hello world"), new AutoJson_ObjectStaticInnerClass_Inner(), "{\"value\":\"hello world\"}"},
+                {CrossPackageObject.create(101), new AutoJson_CrossPackageObject(), "{\"value\":101}"},
 
 
                 {
                         new AutoValue_ObjectString("skip unknowns"),
-                        AutoJson_ObjectString.INSTANCE, "" +
+                        new AutoJson_ObjectString(), "" +
                         "\n{" +
                         "\n  \"unknown1\": 10," +
                         "\n  \"unknown2\": {" +

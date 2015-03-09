@@ -3,11 +3,6 @@ package autojson.integration;
 @javax.annotation.Generated("autojson.AutoJsonProcessor")
 public final class AutoJson_PrimitiveLong implements autojson.bind.ValueReader<PrimitiveLong> {
 
-    public static final AutoJson_PrimitiveLong INSTANCE = new AutoJson_PrimitiveLong();
-
-    AutoJson_PrimitiveLong() {
-    }
-
     @Override
     public PrimitiveLong read(javax.json.stream.JsonParser _parser) {
         {
@@ -23,12 +18,17 @@ public final class AutoJson_PrimitiveLong implements autojson.bind.ValueReader<P
             }
         }
         long value = 0L;
-        javax.json.stream.JsonParser.Event _event;
-        while ((_event = _parser.next()) != javax.json.stream.JsonParser.Event.END_OBJECT) {
+        while (_parser.next() != javax.json.stream.JsonParser.Event.END_OBJECT) {
             switch (_parser.getString()) {
-                case "value":
-                    value = autojson.bind.lang.PrimitiveLongReader.INSTANCE.read(_parser);
+                case "value": {
+                    autojson.bind.lang.PrimitiveLongReader _reader = autojson.bind.ReaderCache.getCachedReader(autojson.bind.lang.PrimitiveLongReader.class);
+                    if (_reader == null) {
+                        _reader = new autojson.bind.lang.PrimitiveLongReader();
+                        autojson.bind.ReaderCache.putCachedReader(_reader);
+                    }
+                    value = _reader.read(_parser);
                     break;
+                }
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;

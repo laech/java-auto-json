@@ -3,11 +3,6 @@ package autojson.integration;
 @javax.annotation.Generated("autojson.AutoJsonProcessor")
 public final class AutoJson_Primitives implements autojson.bind.ValueReader<Primitives> {
 
-    public static final AutoJson_Primitives INSTANCE = new AutoJson_Primitives();
-
-    AutoJson_Primitives() {
-    }
-
     @Override
     public Primitives read(javax.json.stream.JsonParser _parser) {
         {
@@ -27,24 +22,53 @@ public final class AutoJson_Primitives implements autojson.bind.ValueReader<Prim
         java.math.BigDecimal decimalValue = null;
         boolean booleanValue = false;
         java.lang.String stringValue = null;
-        javax.json.stream.JsonParser.Event _event;
-        while ((_event = _parser.next()) != javax.json.stream.JsonParser.Event.END_OBJECT) {
+        while (_parser.next() != javax.json.stream.JsonParser.Event.END_OBJECT) {
             switch (_parser.getString()) {
-                case "intValue":
-                    intValue = autojson.bind.lang.PrimitiveIntReader.INSTANCE.read(_parser);
+                case "intValue": {
+                    autojson.bind.lang.PrimitiveIntReader _reader = autojson.bind.ReaderCache.getCachedReader(autojson.bind.lang.PrimitiveIntReader.class);
+                    if (_reader == null) {
+                        _reader = new autojson.bind.lang.PrimitiveIntReader();
+                        autojson.bind.ReaderCache.putCachedReader(_reader);
+                    }
+                    intValue = _reader.read(_parser);
                     break;
-                case "longValue":
-                    longValue = autojson.bind.lang.PrimitiveLongReader.INSTANCE.read(_parser);
+                }
+                case "longValue": {
+                    autojson.bind.lang.PrimitiveLongReader _reader = autojson.bind.ReaderCache.getCachedReader(autojson.bind.lang.PrimitiveLongReader.class);
+                    if (_reader == null) {
+                        _reader = new autojson.bind.lang.PrimitiveLongReader();
+                        autojson.bind.ReaderCache.putCachedReader(_reader);
+                    }
+                    longValue = _reader.read(_parser);
                     break;
-                case "decimalValue":
-                    decimalValue = autojson.bind.math.BigDecimalReader.INSTANCE.read(_parser);
+                }
+                case "decimalValue": {
+                    autojson.bind.math.BigDecimalReader _reader = autojson.bind.ReaderCache.getCachedReader(autojson.bind.math.BigDecimalReader.class);
+                    if (_reader == null) {
+                        _reader = new autojson.bind.math.BigDecimalReader();
+                        autojson.bind.ReaderCache.putCachedReader(_reader);
+                    }
+                    decimalValue = _reader.read(_parser);
                     break;
-                case "booleanValue":
-                    booleanValue = autojson.bind.lang.PrimitiveBooleanReader.INSTANCE.read(_parser);
+                }
+                case "booleanValue": {
+                    autojson.bind.lang.PrimitiveBooleanReader _reader = autojson.bind.ReaderCache.getCachedReader(autojson.bind.lang.PrimitiveBooleanReader.class);
+                    if (_reader == null) {
+                        _reader = new autojson.bind.lang.PrimitiveBooleanReader();
+                        autojson.bind.ReaderCache.putCachedReader(_reader);
+                    }
+                    booleanValue = _reader.read(_parser);
                     break;
-                case "stringValue":
-                    stringValue = autojson.bind.lang.StringReader.INSTANCE.read(_parser);
+                }
+                case "stringValue": {
+                    autojson.bind.lang.StringReader _reader = autojson.bind.ReaderCache.getCachedReader(autojson.bind.lang.StringReader.class);
+                    if (_reader == null) {
+                        _reader = new autojson.bind.lang.StringReader();
+                        autojson.bind.ReaderCache.putCachedReader(_reader);
+                    }
+                    stringValue = _reader.read(_parser);
                     break;
+                }
                 default:
                     autojson.JsonParsers.skipTree(_parser);
                     break;
