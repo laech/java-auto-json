@@ -1,13 +1,13 @@
 package autojson.provider.jackson;
 
-import autojson.integration.ParsingTester;
+import autojson.integration.ParseTester;
 import org.junit.Test;
 
 public final class ParsingTest {
 
     @Test
     public void parsing() throws Exception {
-        new ParsingTester().test(new JacksonParserFactory());
+        new ParseTester().test(new JacksonParserFactory());
     }
 
 }

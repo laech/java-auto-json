@@ -15,11 +15,11 @@ import static java.util.Arrays.asList;
 import static java.util.logging.Level.INFO;
 import static org.junit.Assert.assertEquals;
 
-public final class ParsingTester {
+public final class ParseTester {
 
     private final List<Scenario> scenarios;
 
-    public ParsingTester() {
+    public ParseTester() {
         scenarios = asList(
                 new Scenario(new AutoValue_PrimitiveInt(0), new AutoJson_PrimitiveInt(), "{\"value\":0}"),
                 new Scenario(new AutoValue_PrimitiveInt(Integer.MAX_VALUE), new AutoJson_PrimitiveInt(), "{\"value\":" + Integer.MAX_VALUE + "}"),
@@ -96,7 +96,13 @@ public final class ParsingTester {
                         "\n  \"value\":\"skip unknowns\"," +
                         "\n  \"unknown4\": {" +
                         "\n    \"valueX\": \"x\"," +
-                        "\n    \"valueY\": \"y\"" +
+                        "\n    \"valueY\": {" +
+                        "\n      \"value1\": 1," +
+                        "\n      \"value2\": {" +
+                        "\n        \"value2.1\": 2.1" +
+                        "\n      }," +
+                        "\n      \"value3\": 3" +
+                        "\n    }" +
                         "\n  }" +
                         "\n}"
                 ));
@@ -105,11 +111,17 @@ public final class ParsingTester {
     public void test(JsonParserFactory factory) throws Exception {
         Logger logger = Logger.getLogger(getClass().getCanonicalName());
         for (Scenario scenario : scenarios) {
-            if (logger.isLoggable(INFO)) {
-                logger.info("Testing " + factory + ", " + scenario.expected);
-            }
             JsonParser parser = factory.createParser(new StringReader(scenario.json));
-            assertEquals(scenario.expected, scenario.reader.read(parser));
+            Object actual = scenario.reader.read(parser);
+            if (logger.isLoggable(INFO)) {
+                logger.info("Testing " + factory +
+                                "\nExpected: " + scenario.expected +
+                                "\n  Actual: " + actual +
+                                "\n    Json: " + scenario.json +
+                                "\n"
+                );
+            }
+            assertEquals(scenario.expected, actual);
         }
     }
 
