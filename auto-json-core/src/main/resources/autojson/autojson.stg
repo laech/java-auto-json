@@ -1,0 +1,83 @@
+main(model) ::= <<
+<model.package:package()>
+<!
+    No imports so that extension code don't implicitly depend on those,
+    which can cause breakage if we change the imports here later.
+!>
+
+@javax.annotation.Generated("<model.processor.class.canonicalName>")
+public final class <model.generatedTypeName> extends autojson.bind.NullableMapper\<<model.targetTypeName>\> {
+
+    <! Underscore our variable names to minimise conflict with model supplied variables. !>
+    @Override
+    protected <model.targetTypeName> readNotNull(autojson.stream.JsonParser _parser) throws java.io.IOException {
+        if (_parser.getToken() != autojson.stream.JsonToken.BEGIN_OBJECT) {
+            throw new autojson.bind.JsonBindException(
+                    "expected " + autojson.stream.JsonToken.BEGIN_OBJECT +
+                            " but was " + _parser.getToken() + " at " + _parser.getLocation());
+        }
+        <model.variables:declare(); separator="\n">
+        while (_parser.next() && _parser.getToken() != autojson.stream.JsonToken.END_OBJECT) {
+            switch (_parser.getName()) {
+                <model.variables:case(); separator="\n">
+                default:
+                    _parser.skipValue();
+                    break;
+            }
+        }
+        <model.creationSource>
+    }
+
+    @Override
+    protected void writeNotNull(autojson.stream.JsonGenerator generator, <model.targetTypeName> element) throws java.io.IOException {
+        <model.variables:write(); separator="\n">
+    }
+
+    <model.variables:reader(); separator="\n">
+    <model.variables:writer(); separator="\n">
+}
+
+>>
+
+package(package) ::= <<
+<if(!package.unnamed)>package <package.qualifiedName>;<endif>
+>>
+
+declare(var) ::= <<
+<var.type> <var.name> = <var.defaultValueSource; null="null">;
+>>
+
+case(var) ::= <<
+case "<var.name>":
+    <var.name> = <var.name>Read(_parser);
+    break;
+>>
+
+reader(var) ::= <<
+private <var.type> <var.name>Read(autojson.stream.JsonParser parser) throws java.io.IOException {
+    <var.mapperClassName> mapper = autojson.bind.MapperCache.get(<var.mapperClassName>.class);
+    if (mapper == null) {
+        mapper = new <var.mapperClassName>();
+        autojson.bind.MapperCache.put(mapper);
+    }
+    return mapper.read(parser);
+}
+
+>>
+
+write(var) ::= <<
+<var.name>Write(generator, element);
+>>
+
+writer(var) ::= <<
+private void <var.name>Write(autojson.stream.JsonGenerator generator, <model.targetTypeName> element) throws java.io.IOException {
+    <var.mapperClassName> mapper = autojson.bind.MapperCache.get(<var.mapperClassName>.class);
+    if (mapper == null) {
+        mapper = new <var.mapperClassName>();
+        autojson.bind.MapperCache.put(mapper);
+    }
+    generator.writeName("<var.name>");
+    mapper.write(generator, element<var.valueAccessorSource>);
+}
+
+>>

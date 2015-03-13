@@ -1,0 +1,75 @@
+subprojects {
+
+    apply plugin: 'java'
+
+    version = '1.0'
+
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+
+    sourceSets {
+        main {
+            output.resourcesDir = "${buildDir}/classes/main"
+        }
+    }
+
+    dependencies {
+        testCompile 'junit:junit:4.12'
+    }
+
+    repositories {
+        jcenter()
+    }
+
+    task testJar(type: Jar, dependsOn: testClasses) {
+        baseName = "${archivesBaseName}-test"
+        from sourceSets.test.output
+    }
+
+    configurations {
+        tests
+    }
+
+    artifacts {
+        tests testJar
+    }
+
+}
+
+project(':auto-json-core-internal') {
+
+    dependencies {
+        compile 'org.antlr:ST4:4.0.8'
+        compile 'com.google.auto.service:auto-service:1.0-rc2'
+    }
+
+}
+
+project(':auto-json-core') {
+
+    dependencies {
+        compile project(':auto-json-core-internal')
+        compile 'com.google.auto.value:auto-value:1.0'
+        compile 'com.google.code.findbugs:jsr305:3.0.0'
+    }
+
+}
+
+project(':auto-json-provider-jackson') {
+
+    dependencies {
+        compile project(':auto-json-core')
+        compile 'com.fasterxml.jackson.core:jackson-core:2.5.1'
+        testCompile project(path: ':auto-json-core', configuration: 'tests')
+    }
+
+}
+
+project(':auto-json-provider-gson') {
+
+    dependencies {
+        compile project(':auto-json-core')
+        compile 'com.google.code.gson:gson:1.7.1'
+    }
+
+}
