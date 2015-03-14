@@ -21,19 +21,6 @@ subprojects {
         jcenter()
     }
 
-    task testJar(type: Jar, dependsOn: testClasses) {
-        baseName = "${archivesBaseName}-test"
-        from sourceSets.test.output
-    }
-
-    configurations {
-        tests
-    }
-
-    artifacts {
-        tests testJar
-    }
-
 }
 
 project(':auto-json-core-internal') {
@@ -60,7 +47,7 @@ project(':auto-json-provider-jackson') {
     dependencies {
         compile project(':auto-json-core')
         compile 'com.fasterxml.jackson.core:jackson-core:2.5.1'
-        testCompile project(path: ':auto-json-core', configuration: 'tests')
+        testCompile project(path: ':auto-json-integration-test', configuration: 'tests')
     }
 
 }
@@ -70,6 +57,27 @@ project(':auto-json-provider-gson') {
     dependencies {
         compile project(':auto-json-core')
         compile 'com.google.code.gson:gson:1.7.1'
+    }
+
+}
+
+project(':auto-json-integration-test') {
+
+    dependencies {
+        compile project(':auto-json-core')
+    }
+
+    task testJar(type: Jar, dependsOn: testClasses) {
+        baseName = "${archivesBaseName}-test"
+        from sourceSets.test.output
+    }
+
+    configurations {
+        tests
+    }
+
+    artifacts {
+        tests testJar
     }
 
 }

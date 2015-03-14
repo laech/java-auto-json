@@ -1,0 +1,20 @@
+main(model) ::= <<
+package <model.packageName>;
+
+@javax.annotation.Generated("<model.processorClassName>")
+public final class <model.generatedClassSimpleName> {
+
+    public <model.targetTypeName> read(autojson.stream.JsonParser parser) throws java.io.IOException {
+        if (!parser.next()) {
+            throw new autojson.bind.JsonBindException("No more token from parser");
+        }
+        return <model.parsingSource>;
+    }
+
+    public void write(autojson.stream.JsonGenerator generator, <model.targetTypeName> value) throws java.io.IOException {
+        <model.generatingSource>;
+    }
+
+}
+
+>>

@@ -1,0 +1,19 @@
+main(model) ::= <<
+package <model.packageName>;
+
+@javax.annotation.Generated("<model.processorClassName>")
+public final class <model.generatedClassSimpleName> extends autojson.bind.NullableMapper\<<model.targetTypeName>\> {
+
+    @Override
+    protected <model.targetTypeName> readNotNull(autojson.stream.JsonParser parser) throws java.io.IOException {
+        return <model.parsingSource>;
+    }
+
+    @Override
+    protected void writeNotNull(autojson.stream.JsonGenerator generator, <model.targetTypeName> value) throws java.io.IOException {
+        <model.generatingSource>;
+    }
+
+}
+
+>>

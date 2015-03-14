@@ -1,22 +1,15 @@
 package autojson.bind.java.lang;
 
-import autojson.bind.NullableMapper;
-import autojson.stream.JsonGenerator;
-import autojson.stream.JsonParser;
-import autojson.stream.JsonToken;
-
-import javax.annotation.Generated;
-
-@Generated("autojson.internal.bind.DefaultsProcessor")
-public final class StringMapper extends NullableMapper<String> {
+@javax.annotation.Generated("autojson.internal.SimpleMappersProcessor")
+public final class StringMapper extends autojson.bind.NullableMapper<String> {
 
     @Override
-    protected String readNotNull(JsonParser parser) throws java.io.IOException {
+    protected String readNotNull(autojson.stream.JsonParser parser) throws java.io.IOException {
         return parser.getString();
     }
 
     @Override
-    protected void writeNotNull(JsonGenerator generator, String value) throws java.io.IOException {
+    protected void writeNotNull(autojson.stream.JsonGenerator generator, String value) throws java.io.IOException {
         generator.writeValue(value);
     }
 
