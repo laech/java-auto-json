@@ -26,7 +26,9 @@ public final class AutoJson_CrossPackageObject extends autojson.bind.NullableMap
 
     @Override
     protected void writeNotNull(autojson.stream.JsonGenerator generator, CrossPackageObject element) throws java.io.IOException {
+        generator.writeBeginObject();
         valueWrite(generator, element);
+        generator.writeEndObject();
     }
 
     private int valueRead(autojson.stream.JsonParser parser) throws java.io.IOException {

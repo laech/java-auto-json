@@ -26,7 +26,9 @@ public final class AutoJson_ObjectNestedAutoJson extends autojson.bind.NullableM
 
     @Override
     protected void writeNotNull(autojson.stream.JsonGenerator generator, ObjectNestedAutoJson element) throws java.io.IOException {
+        generator.writeBeginObject();
         valueWrite(generator, element);
+        generator.writeEndObject();
     }
 
     private autojson.integration.ObjectString valueRead(autojson.stream.JsonParser parser) throws java.io.IOException {

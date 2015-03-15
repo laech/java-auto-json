@@ -34,9 +34,11 @@ public final class AutoJson_ObjectNestedAutoJsonMulti extends autojson.bind.Null
 
     @Override
     protected void writeNotNull(autojson.stream.JsonGenerator generator, ObjectNestedAutoJsonMulti element) throws java.io.IOException {
+        generator.writeBeginObject();
         stringValueWrite(generator, element);
         intValueWrite(generator, element);
         longValueWrite(generator, element);
+        generator.writeEndObject();
     }
 
     private autojson.integration.ObjectString stringValueRead(autojson.stream.JsonParser parser) throws java.io.IOException {

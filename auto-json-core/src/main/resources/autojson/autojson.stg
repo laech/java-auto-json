@@ -30,7 +30,9 @@ public final class <model.generatedTypeName> extends autojson.bind.NullableMappe
 
     @Override
     protected void writeNotNull(autojson.stream.JsonGenerator generator, <model.targetTypeName> element) throws java.io.IOException {
+        generator.writeBeginObject();
         <model.variables:write(); separator="\n">
+        generator.writeEndObject();
     }
 
     <model.variables:reader(); separator="\n">

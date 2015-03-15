@@ -1,11 +1,11 @@
 package autojson.provider.jackson;
 
-import autojson.bind.MapperTest;
+import autojson.bind.BasicMapperTest;
 import autojson.stream.JsonFactory;
 
-public final class JacksonMapperTest extends MapperTest {
+public final class JacksonBasicMapperTest extends BasicMapperTest {
 
-    public <T> JacksonMapperTest(Object mapper, T expected) {
+    public <T> JacksonBasicMapperTest(Object mapper, T expected) {
         super(mapper, expected);
     }
 

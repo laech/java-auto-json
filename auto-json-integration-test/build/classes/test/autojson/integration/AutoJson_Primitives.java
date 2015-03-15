@@ -42,11 +42,13 @@ public final class AutoJson_Primitives extends autojson.bind.NullableMapper<Prim
 
     @Override
     protected void writeNotNull(autojson.stream.JsonGenerator generator, Primitives element) throws java.io.IOException {
+        generator.writeBeginObject();
         intValueWrite(generator, element);
         longValueWrite(generator, element);
         decimalValueWrite(generator, element);
         booleanValueWrite(generator, element);
         stringValueWrite(generator, element);
+        generator.writeEndObject();
     }
 
     private int intValueRead(autojson.stream.JsonParser parser) throws java.io.IOException {

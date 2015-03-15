@@ -26,7 +26,9 @@ public final class AutoJson_ObjectLong extends autojson.bind.NullableMapper<Obje
 
     @Override
     protected void writeNotNull(autojson.stream.JsonGenerator generator, ObjectLong element) throws java.io.IOException {
+        generator.writeBeginObject();
         valueWrite(generator, element);
+        generator.writeEndObject();
     }
 
     private java.lang.Long valueRead(autojson.stream.JsonParser parser) throws java.io.IOException {

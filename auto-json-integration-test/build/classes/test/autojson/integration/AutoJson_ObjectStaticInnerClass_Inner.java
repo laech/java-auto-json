@@ -26,7 +26,9 @@ public final class AutoJson_ObjectStaticInnerClass_Inner extends autojson.bind.N
 
     @Override
     protected void writeNotNull(autojson.stream.JsonGenerator generator, ObjectStaticInnerClass.Inner element) throws java.io.IOException {
+        generator.writeBeginObject();
         valueWrite(generator, element);
+        generator.writeEndObject();
     }
 
     private java.lang.String valueRead(autojson.stream.JsonParser parser) throws java.io.IOException {

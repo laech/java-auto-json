@@ -22,6 +22,8 @@ public final class AutoJson_ObjectEmpty extends autojson.bind.NullableMapper<Obj
 
     @Override
     protected void writeNotNull(autojson.stream.JsonGenerator generator, ObjectEmpty element) throws java.io.IOException {
+        generator.writeBeginObject();
+        generator.writeEndObject();
     }
 
 }

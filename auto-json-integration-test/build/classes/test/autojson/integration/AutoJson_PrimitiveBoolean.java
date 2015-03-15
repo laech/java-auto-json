@@ -26,7 +26,9 @@ public final class AutoJson_PrimitiveBoolean extends autojson.bind.NullableMappe
 
     @Override
     protected void writeNotNull(autojson.stream.JsonGenerator generator, PrimitiveBoolean element) throws java.io.IOException {
+        generator.writeBeginObject();
         valueWrite(generator, element);
+        generator.writeEndObject();
     }
 
     private boolean valueRead(autojson.stream.JsonParser parser) throws java.io.IOException {

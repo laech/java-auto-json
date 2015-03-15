@@ -1,26 +1,22 @@
 package autojson.integration;
 
-import autojson.bind.ValueReader;
+import autojson.bind.MapperTest;
+import autojson.bind.ValueMapper;
 import autojson.integration.sub.AutoJson_CrossPackageObject;
 import autojson.integration.sub.CrossPackageObject;
-import autojson.stream.JsonFactory;
-import autojson.stream.JsonParser;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import java.io.StringReader;
 import java.math.BigDecimal;
 import java.util.Collection;
 
-import static com.google.common.truth.Truth.assertThat;
 import static java.util.Arrays.asList;
 
 @RunWith(Parameterized.class)
-public abstract class ReaderTest {
+public abstract class AutoJsonMapperTest extends MapperTest {
 
-    @Parameters(name = "{0}")
+    @Parameters(name = "{1}")
     public static Collection<Object[]> data() {
         return asList(new Object[][]{
                 {new AutoJson_PrimitiveInt(), new AutoValue_PrimitiveInt(0), "{\"value\":0}"},
@@ -55,8 +51,8 @@ public abstract class ReaderTest {
                 {new AutoJson_ObjectBigDecimal(), new AutoValue_ObjectBigDecimal(new BigDecimal("0")), "{\"value\":0}"},
                 {new AutoJson_ObjectBigDecimal(), new AutoValue_ObjectBigDecimal(new BigDecimal("9.9")), "{\"value\":9.9}"},
                 {new AutoJson_ObjectBigDecimal(), new AutoValue_ObjectBigDecimal(new BigDecimal("-0.3")), "{\"value\":-0.3}"},
-                {new AutoJson_ObjectBigDecimal(), new AutoValue_ObjectBigDecimal(new BigDecimal("1e10")), "{\"value\":1e10}"},
-                {new AutoJson_ObjectBigDecimal(), new AutoValue_ObjectBigDecimal(new BigDecimal("1e100")), "{\"value\":1e100}"},
+                {new AutoJson_ObjectBigDecimal(), new AutoValue_ObjectBigDecimal(new BigDecimal("1E+10")), "{\"value\":1E+10}"},
+                {new AutoJson_ObjectBigDecimal(), new AutoValue_ObjectBigDecimal(new BigDecimal("1E+100")), "{\"value\":1E+100}"},
 
                 {new AutoJson_ObjectNestedAutoJson(), new AutoValue_ObjectNestedAutoJson(null), "{\"value\":null}"},
                 {new AutoJson_ObjectNestedAutoJson(), new AutoValue_ObjectNestedAutoJson(new AutoValue_ObjectString("a")), "{\"value\":{\"value\":\"a\"}}"},
@@ -67,64 +63,22 @@ public abstract class ReaderTest {
                                 new AutoValue_PrimitiveInt(1),
                                 100L
                         ), "" +
-                        "\n{" +
-                        "\n  \"stringValue\": {" +
-                        "\n      \"value\": \"a\"" +
-                        "\n  }," +
-                        "\n  \"intValue\": {" +
-                        "\n      \"value\": 1" +
-                        "\n  }," +
-                        "\n  \"longValue\": 100" +
-                        "\n}"
+                        "{" +
+                        "\"stringValue\":{\"value\":\"a\"}," +
+                        "\"intValue\":{\"value\":1}," +
+                        "\"longValue\":100" +
+                        "}"
                 },
 
                 {new AutoJson_ObjectEmpty(), new AutoValue_ObjectEmpty(), "{}"},
                 {new AutoJson_ObjectStaticInnerClass_Inner(), new AutoValue_ObjectStaticInnerClass_Inner("hello world"), "{\"value\":\"hello world\"}"},
                 {new AutoJson_CrossPackageObject(), CrossPackageObject.create(101), "{\"value\":101}"},
 
-                {
-                        new AutoJson_ObjectString(),
-                        new AutoValue_ObjectString("skip unknowns"), "" +
-                        "\n{" +
-                        "\n  \"unknown1\": 10," +
-                        "\n  \"unknown2\": {" +
-                        "\n    \"value\": \"a\"" +
-                        "\n  }," +
-                        "\n  \"unknown3\": {" +
-                        "\n    \"value\": 2" +
-                        "\n  }," +
-                        "\n  \"value\":\"skip unknowns\"," +
-                        "\n  \"unknown4\": {" +
-                        "\n    \"valueX\": \"x\"," +
-                        "\n    \"valueY\": {" +
-                        "\n      \"value1\": 1," +
-                        "\n      \"value2\": {" +
-                        "\n        \"value2.1\": 2.1" +
-                        "\n      }," +
-                        "\n      \"value3\": 3" +
-                        "\n    }" +
-                        "\n  }" +
-                        "\n}"
-                }
         });
     }
 
-    private final Object expected;
-    private final ValueReader<Object> reader;
-    private final String json;
-
-    public ReaderTest(ValueReader<Object> reader, Object expected, String json) {
-        this.expected = expected;
-        this.reader = reader;
-        this.json = json;
+    public AutoJsonMapperTest(ValueMapper<Object> mapper, Object object, String json) {
+        super(mapper, object, json);
     }
-
-    @Test
-    public void test() throws Exception {
-        JsonParser parser = factory().createParser(new StringReader(json));
-        assertThat(reader.read(parser)).isEqualTo(expected);
-    }
-
-    protected abstract JsonFactory factory();
 
 }

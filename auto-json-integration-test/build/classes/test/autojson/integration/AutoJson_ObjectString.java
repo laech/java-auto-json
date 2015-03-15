@@ -26,7 +26,9 @@ public final class AutoJson_ObjectString extends autojson.bind.NullableMapper<Ob
 
     @Override
     protected void writeNotNull(autojson.stream.JsonGenerator generator, ObjectString element) throws java.io.IOException {
+        generator.writeBeginObject();
         valueWrite(generator, element);
+        generator.writeEndObject();
     }
 
     private java.lang.String valueRead(autojson.stream.JsonParser parser) throws java.io.IOException {
