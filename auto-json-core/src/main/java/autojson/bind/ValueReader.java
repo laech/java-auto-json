@@ -14,10 +14,14 @@ import java.io.IOException;
 public interface ValueReader<T> {
 
     /**
-     * Reads the next value from the current parser position.
-     *
-     * @return the value read, or null if the value is {@link JsonToken#NULL}
-     * @throws JsonBindException if the next value type cannot be handled by this instance
+     * Reads the next object from the current parser position.
+     * <p/>
+     * If the next token is
+     * <ul>
+     * <li>{@link JsonToken#NULL NULL} - will return null</li>
+     * <li>{@link JsonToken#BEGIN_OBJECT BEGIN_OBJECT} - will parse the object</li>
+     * <li>else - will throw {@link IllegalStateException}</li>
+     * </ul>
      */
     @Nullable
     T read(JsonParser parser) throws IOException;

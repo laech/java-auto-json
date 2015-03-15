@@ -11,7 +11,7 @@ public abstract class NullableMapper<T> implements ValueMapper<T> {
     @Override
     public final T read(JsonParser parser) throws IOException {
         if (!parser.next()) {
-            throw new JsonBindException("No more token from parser");
+            throw new IllegalStateException("No more token from parser");
         }
         if (parser.getToken() == JsonToken.NULL) {
             return null;

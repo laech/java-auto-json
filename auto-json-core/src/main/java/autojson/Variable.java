@@ -10,6 +10,7 @@ import autojson.bind.java.lang.StringMapper;
 import autojson.bind.java.math.BigDecimalMapper;
 
 import javax.annotation.processing.ProcessingEnvironment;
+import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static autojson.TemplateModel.getGeneratedTypeName;
+import static javax.tools.Diagnostic.Kind.ERROR;
 
 final class Variable {
 
@@ -40,18 +42,20 @@ final class Variable {
     }
 
     private final ProcessingEnvironment env;
+    private final Element element;
     private final TypeMirror type;
     private final String varName;
     private final String jsonName;
     private final String valueAccessorSource;
     private final String defaultValueSource;
 
-    Variable(ProcessingEnvironment env, TypeMirror type, String varName, String jsonName, String valueAccessorSource) {
-        this(env, type, varName, jsonName, valueAccessorSource, Defaults.getSource(type));
+    Variable(ProcessingEnvironment env, Element element, TypeMirror type, String varName, String jsonName, String valueAccessorSource) {
+        this(env, element, type, varName, jsonName, valueAccessorSource, Defaults.getSource(type));
     }
 
-    Variable(ProcessingEnvironment env, TypeMirror type, String varName, String jsonName, String valueAccessorSource, String defaultValueSource) {
+    Variable(ProcessingEnvironment env, Element element, TypeMirror type, String varName, String jsonName, String valueAccessorSource, String defaultValueSource) {
         this.env = env;
+        this.element = element;
         this.type = type;
         this.varName = varName;
         this.jsonName = jsonName;
@@ -98,7 +102,12 @@ final class Variable {
         if (isAutoJson()) {
             return getAutoJsonGeneratedTypeName();
         } else {
-            return mappers.get(getType().toString());
+            String mapper = mappers.get(getType().toString());
+            if (mapper == null) {
+                env.getMessager().printMessage(ERROR, "No mapper found for " + getType(), element);
+                throw new AbortProcessingException();
+            }
+            return mapper;
         }
     }
 

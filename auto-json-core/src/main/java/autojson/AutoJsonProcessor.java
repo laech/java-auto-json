@@ -48,6 +48,8 @@ public final class AutoJsonProcessor extends AbstractProcessor {
         for (Element element : round.getElementsAnnotatedWith(AutoJson.class)) {
             try {
                 process((TypeElement) element);
+            } catch (AbortProcessingException e) {
+                // continue to next type
             } catch (Exception e) {
                 // Make better error message for all exceptions
                 StringWriter writer = new StringWriter();

@@ -6,7 +6,7 @@ public final class AutoJson_ObjectLong extends autojson.bind.NullableMapper<Obje
     @Override
     protected ObjectLong readNotNull(autojson.stream.JsonParser _parser) throws java.io.IOException {
         if (_parser.getToken() != autojson.stream.JsonToken.BEGIN_OBJECT) {
-            throw new autojson.bind.JsonBindException(
+            throw new IllegalStateException(
                     "expected " + autojson.stream.JsonToken.BEGIN_OBJECT +
                             " but was " + _parser.getToken() + " at " + _parser.getLocation());
         }

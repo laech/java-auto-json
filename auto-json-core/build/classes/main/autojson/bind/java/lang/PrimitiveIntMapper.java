@@ -5,7 +5,7 @@ public final class PrimitiveIntMapper {
 
     public int read(autojson.stream.JsonParser parser) throws java.io.IOException {
         if (!parser.next()) {
-            throw new autojson.bind.JsonBindException("No more token from parser");
+            throw new IllegalStateException("No more token from parser");
         }
         return parser.getInt();
     }

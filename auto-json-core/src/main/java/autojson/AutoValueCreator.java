@@ -36,7 +36,7 @@ final class AutoValueCreator implements Creator {
                 if (jsonNameOverride != null) {
                     jsonName = jsonNameOverride.value();
                 }
-                vars.add(new Variable(env, returnType, varName, jsonName, "." + method.getSimpleName() + "()")); // TODO
+                vars.add(new Variable(env, method, returnType, varName, jsonName, "." + method.getSimpleName() + "()")); // TODO
             }
         }
         return vars;
