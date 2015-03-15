@@ -80,6 +80,7 @@ project(':auto-json-integration-test') {
 
     dependencies {
         compile project(':auto-json-core')
+        testCompile project(path: ':auto-json-core', configuration: 'tests')
     }
 
 }
