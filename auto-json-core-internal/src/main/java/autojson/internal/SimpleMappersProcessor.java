@@ -105,8 +105,8 @@ public final class SimpleMappersProcessor extends AbstractProcessor {
             return pkg.getQualifiedName() + "." + getGeneratedClassSimpleName();
         }
 
-        public String getTargetTypeName() {
-            return getTargetType().toString().replace("java.lang.", "");
+        public String getTargetTypeQualifiedName() {
+            return getTargetType().toString();
         }
 
         public STGroup getTemplate() {

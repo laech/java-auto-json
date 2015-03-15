@@ -73,6 +73,30 @@ public abstract class AutoJsonMapperTest extends MapperTest {
                 {new AutoJson_ObjectEmpty(), new AutoValue_ObjectEmpty(), "{}"},
                 {new AutoJson_ObjectStaticInnerClass_Inner(), new AutoValue_ObjectStaticInnerClass_Inner("hello world"), "{\"value\":\"hello world\"}"},
                 {new AutoJson_CrossPackageObject(), CrossPackageObject.create(101), "{\"value\":101}"},
+                {new AutoJson_ObjectNameWithSpace(), new AutoValue_ObjectNameWithSpace("a"), "{\"key with spaces\":\"a\"}"},
+
+                {
+                        // Example from https://tools.ietf.org/html/rfc7159
+                        new AutoJson_ObjectImage(),
+                        new AutoValue_ObjectImage(new AutoValue_ObjectImage_Image(800, 600, "View from 15th Floor",
+                                new AutoValue_ObjectImage_Thumbnail("http://www.example.com/image/481989943", 125, 100), false)
+                        ), "" +
+                        "{" +
+                        "\"Image\":{" +
+                        "\"Width\":800," +
+                        "\"Height\":600," +
+                        "\"Title\":\"View from 15th Floor\"," +
+                        "\"Thumbnail\":{" +
+                        "\"Url\":\"http://www.example.com/image/481989943\"," +
+                        "\"Height\":125," +
+                        "\"Width\":100" +
+                        "}," +
+                        "\"Animated\":false" +
+//                        "\"Animated\":false," +
+//                                "\"IDs\":[116,943,234,38793]" + // TODO
+                        "}" +
+                        "}"
+                },
 
         });
     }

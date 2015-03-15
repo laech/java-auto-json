@@ -1,10 +1,15 @@
 package autojson;
 
-import autojson.bind.java.lang.*;
+import autojson.bind.java.lang.BooleanMapper;
+import autojson.bind.java.lang.IntegerMapper;
+import autojson.bind.java.lang.LongMapper;
+import autojson.bind.java.lang.PrimitiveBooleanMapper;
+import autojson.bind.java.lang.PrimitiveIntMapper;
+import autojson.bind.java.lang.PrimitiveLongMapper;
+import autojson.bind.java.lang.StringMapper;
 import autojson.bind.java.math.BigDecimalMapper;
 
 import javax.annotation.processing.ProcessingEnvironment;
-import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
@@ -36,18 +41,20 @@ final class Variable {
 
     private final ProcessingEnvironment env;
     private final TypeMirror type;
-    private final Name name;
+    private final String varName;
+    private final String jsonName;
     private final String valueAccessorSource;
     private final String defaultValueSource;
 
-    Variable(ProcessingEnvironment env, TypeMirror type, Name name, String valueAccessorSource) {
-        this(env, type, name, valueAccessorSource, Defaults.getSource(type));
+    Variable(ProcessingEnvironment env, TypeMirror type, String varName, String jsonName, String valueAccessorSource) {
+        this(env, type, varName, jsonName, valueAccessorSource, Defaults.getSource(type));
     }
 
-    Variable(ProcessingEnvironment env, TypeMirror type, Name name, String valueAccessorSource, String defaultValueSource) {
+    Variable(ProcessingEnvironment env, TypeMirror type, String varName, String jsonName, String valueAccessorSource, String defaultValueSource) {
         this.env = env;
         this.type = type;
-        this.name = name;
+        this.varName = varName;
+        this.jsonName = jsonName;
         this.valueAccessorSource = valueAccessorSource;
         this.defaultValueSource = defaultValueSource;
     }
@@ -56,8 +63,18 @@ final class Variable {
         return type;
     }
 
-    public Name getName() {
-        return name;
+    /**
+     * The name of this variable to use in Java source.
+     */
+    public String getVarName() {
+        return varName;
+    }
+
+    /**
+     * The name of this variable as the JSON field.
+     */
+    public String getJsonName() {
+        return jsonName;
     }
 
     public String getValueAccessorSource() {
@@ -79,16 +96,16 @@ final class Variable {
 
     public String getMapperClassName() {
         if (isAutoJson()) {
-            return getAutoJsonGeneratedTypeName().toString();
+            return getAutoJsonGeneratedTypeName();
         } else {
             return mappers.get(getType().toString());
         }
     }
 
-    private Name getAutoJsonGeneratedTypeName() {
+    private String getAutoJsonGeneratedTypeName() {
         Elements util = env.getElementUtils();
         TypeElement type = getTypeElement();
-        return util.getName(getGeneratedTypeName(util.getPackageOf(type), type));
+        return getGeneratedTypeName(util.getPackageOf(type), type);
     }
 
 }

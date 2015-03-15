@@ -30,7 +30,13 @@ final class AutoValueCreator implements Creator {
             if (method.getModifiers().contains(ABSTRACT) &&
                     method.getParameters().isEmpty() &&
                     returnType.getKind() != VOID) {
-                vars.add(new Variable(env, returnType, method.getSimpleName(), "." + method.getSimpleName() + "()")); // TODO
+                String varName = method.getSimpleName().toString();
+                String jsonName = varName;
+                AutoJson.Name jsonNameOverride = method.getAnnotation(AutoJson.Name.class);
+                if (jsonNameOverride != null) {
+                    jsonName = jsonNameOverride.value();
+                }
+                vars.add(new Variable(env, returnType, varName, jsonName, "." + method.getSimpleName() + "()")); // TODO
             }
         }
         return vars;

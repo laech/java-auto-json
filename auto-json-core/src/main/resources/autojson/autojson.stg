@@ -46,17 +46,17 @@ package(package) ::= <<
 >>
 
 declare(var) ::= <<
-<var.type> <var.name> = <var.defaultValueSource; null="null">;
+<var.type> <var.varName> = <var.defaultValueSource; null="null">;
 >>
 
 case(var) ::= <<
-case "<var.name>":
-    <var.name> = <var.name>Read(_parser);
+case "<var.jsonName>":
+    <var.varName> = <var.varName>Read(_parser);
     break;
 >>
 
 reader(var) ::= <<
-private <var.type> <var.name>Read(autojson.stream.JsonParser parser) throws java.io.IOException {
+private <var.type> <var.varName>Read(autojson.stream.JsonParser parser) throws java.io.IOException {
     <var.mapperClassName> mapper = autojson.bind.MapperCache.get(<var.mapperClassName>.class);
     if (mapper == null) {
         mapper = new <var.mapperClassName>();
@@ -68,17 +68,17 @@ private <var.type> <var.name>Read(autojson.stream.JsonParser parser) throws java
 >>
 
 write(var) ::= <<
-<var.name>Write(generator, element);
+<var.varName>Write(generator, element);
 >>
 
 writer(var) ::= <<
-private void <var.name>Write(autojson.stream.JsonGenerator generator, <model.targetTypeName> element) throws java.io.IOException {
+private void <var.varName>Write(autojson.stream.JsonGenerator generator, <model.targetTypeName> element) throws java.io.IOException {
     <var.mapperClassName> mapper = autojson.bind.MapperCache.get(<var.mapperClassName>.class);
     if (mapper == null) {
         mapper = new <var.mapperClassName>();
         autojson.bind.MapperCache.put(mapper);
     }
-    generator.writeName("<var.name>");
+    generator.writeName("<var.jsonName>");
     mapper.write(generator, element<var.valueAccessorSource>);
 }
 
