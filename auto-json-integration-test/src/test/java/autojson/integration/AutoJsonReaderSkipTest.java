@@ -1,7 +1,7 @@
 package autojson.integration;
 
+import autojson.bind.Mapper;
 import autojson.bind.MapperTest;
-import autojson.bind.ValueReader;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
@@ -45,8 +45,8 @@ public abstract class AutoJsonReaderSkipTest extends MapperTest {
         });
     }
 
-    public AutoJsonReaderSkipTest(ValueReader<Object> reader, Object object, String json) {
-        super(reader, object, json);
+    public AutoJsonReaderSkipTest(Mapper<Object> mapper, Object object, String json) {
+        super(mapper, object, json);
     }
 
     @Override

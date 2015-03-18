@@ -7,15 +7,14 @@ import autojson.stream.JsonToken;
 
 import java.io.IOException;
 
+import static java.util.Objects.requireNonNull;
+
 public final class JacksonParser implements JsonParser {
 
     private final com.fasterxml.jackson.core.JsonParser delegate;
 
     public JacksonParser(com.fasterxml.jackson.core.JsonParser delegate) {
-        if (delegate == null) {
-            throw new NullPointerException();
-        }
-        this.delegate = delegate;
+        this.delegate = requireNonNull(delegate);
     }
 
     @Override
@@ -29,7 +28,11 @@ public final class JacksonParser implements JsonParser {
 
     @Override
     public JsonToken getToken() {
-        switch (delegate.getCurrentToken()) {
+        com.fasterxml.jackson.core.JsonToken token = delegate.getCurrentToken();
+        if (token == null) {
+            return null;
+        }
+        switch (token) {
             case START_OBJECT:
                 return JsonToken.BEGIN_OBJECT;
             case START_ARRAY:

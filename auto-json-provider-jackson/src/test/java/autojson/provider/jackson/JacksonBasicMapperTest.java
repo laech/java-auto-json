@@ -5,7 +5,7 @@ import autojson.stream.JsonFactory;
 
 public final class JacksonBasicMapperTest extends BasicMapperTest {
 
-    public <T> JacksonBasicMapperTest(Object mapper, T expected) {
+    public JacksonBasicMapperTest(Object mapper, Object expected) {
         super(mapper, expected);
     }
 

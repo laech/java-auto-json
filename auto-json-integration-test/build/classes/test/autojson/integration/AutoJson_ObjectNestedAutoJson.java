@@ -3,6 +3,8 @@ package autojson.integration;
 @javax.annotation.Generated("autojson.AutoJsonProcessor")
 public final class AutoJson_ObjectNestedAutoJson extends autojson.bind.NullableMapper<ObjectNestedAutoJson> {
 
+    private static final autojson.bind.Mapper<autojson.integration.ObjectString> valueMapper = new AutoJson_ObjectString();
+
     @Override
     protected ObjectNestedAutoJson readNotNull(autojson.stream.JsonParser _parser) throws java.io.IOException {
         if (_parser.getToken() != autojson.stream.JsonToken.BEGIN_OBJECT) {
@@ -14,7 +16,7 @@ public final class AutoJson_ObjectNestedAutoJson extends autojson.bind.NullableM
         while (_parser.next() && _parser.getToken() != autojson.stream.JsonToken.END_OBJECT) {
             switch (_parser.getName()) {
                 case "value":
-                    value = valueRead(_parser);
+                    value = valueMapper.read(_parser);
                     break;
                 default:
                     _parser.skipValue();
@@ -27,27 +29,9 @@ public final class AutoJson_ObjectNestedAutoJson extends autojson.bind.NullableM
     @Override
     protected void writeNotNull(autojson.stream.JsonGenerator generator, ObjectNestedAutoJson element) throws java.io.IOException {
         generator.writeBeginObject();
-        valueWrite(generator, element);
-        generator.writeEndObject();
-    }
-
-    private autojson.integration.ObjectString valueRead(autojson.stream.JsonParser parser) throws java.io.IOException {
-        AutoJson_ObjectString mapper = autojson.bind.MapperCache.get(AutoJson_ObjectString.class);
-        if (mapper == null) {
-            mapper = new AutoJson_ObjectString();
-            autojson.bind.MapperCache.put(mapper);
-        }
-        return mapper.read(parser);
-    }
-
-    private void valueWrite(autojson.stream.JsonGenerator generator, ObjectNestedAutoJson element) throws java.io.IOException {
-        AutoJson_ObjectString mapper = autojson.bind.MapperCache.get(AutoJson_ObjectString.class);
-        if (mapper == null) {
-            mapper = new AutoJson_ObjectString();
-            autojson.bind.MapperCache.put(mapper);
-        }
         generator.writeName("value");
-        mapper.write(generator, element.value());
+        valueMapper.write(generator, element.value());
+        generator.writeEndObject();
     }
 
 }

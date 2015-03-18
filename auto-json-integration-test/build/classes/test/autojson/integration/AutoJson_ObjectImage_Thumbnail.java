@@ -3,6 +3,10 @@ package autojson.integration;
 @javax.annotation.Generated("autojson.AutoJsonProcessor")
 public final class AutoJson_ObjectImage_Thumbnail extends autojson.bind.NullableMapper<ObjectImage.Thumbnail> {
 
+    private static final autojson.bind.Mapper<java.lang.String> urlMapper = new autojson.bind.java.lang.StringMapper();
+    private static final autojson.bind.java.lang.PrimitiveIntMapper heightMapper = new autojson.bind.java.lang.PrimitiveIntMapper();
+    private static final autojson.bind.java.lang.PrimitiveIntMapper widthMapper = new autojson.bind.java.lang.PrimitiveIntMapper();
+
     @Override
     protected ObjectImage.Thumbnail readNotNull(autojson.stream.JsonParser _parser) throws java.io.IOException {
         if (_parser.getToken() != autojson.stream.JsonToken.BEGIN_OBJECT) {
@@ -16,13 +20,13 @@ public final class AutoJson_ObjectImage_Thumbnail extends autojson.bind.Nullable
         while (_parser.next() && _parser.getToken() != autojson.stream.JsonToken.END_OBJECT) {
             switch (_parser.getName()) {
                 case "Url":
-                    url = urlRead(_parser);
+                    url = urlMapper.read(_parser);
                     break;
                 case "Height":
-                    height = heightRead(_parser);
+                    height = heightMapper.read(_parser);
                     break;
                 case "Width":
-                    width = widthRead(_parser);
+                    width = widthMapper.read(_parser);
                     break;
                 default:
                     _parser.skipValue();
@@ -35,67 +39,13 @@ public final class AutoJson_ObjectImage_Thumbnail extends autojson.bind.Nullable
     @Override
     protected void writeNotNull(autojson.stream.JsonGenerator generator, ObjectImage.Thumbnail element) throws java.io.IOException {
         generator.writeBeginObject();
-        urlWrite(generator, element);
-        heightWrite(generator, element);
-        widthWrite(generator, element);
-        generator.writeEndObject();
-    }
-
-    private java.lang.String urlRead(autojson.stream.JsonParser parser) throws java.io.IOException {
-        autojson.bind.java.lang.StringMapper mapper = autojson.bind.MapperCache.get(autojson.bind.java.lang.StringMapper.class);
-        if (mapper == null) {
-            mapper = new autojson.bind.java.lang.StringMapper();
-            autojson.bind.MapperCache.put(mapper);
-        }
-        return mapper.read(parser);
-    }
-
-    private int heightRead(autojson.stream.JsonParser parser) throws java.io.IOException {
-        autojson.bind.java.lang.PrimitiveIntMapper mapper = autojson.bind.MapperCache.get(autojson.bind.java.lang.PrimitiveIntMapper.class);
-        if (mapper == null) {
-            mapper = new autojson.bind.java.lang.PrimitiveIntMapper();
-            autojson.bind.MapperCache.put(mapper);
-        }
-        return mapper.read(parser);
-    }
-
-    private int widthRead(autojson.stream.JsonParser parser) throws java.io.IOException {
-        autojson.bind.java.lang.PrimitiveIntMapper mapper = autojson.bind.MapperCache.get(autojson.bind.java.lang.PrimitiveIntMapper.class);
-        if (mapper == null) {
-            mapper = new autojson.bind.java.lang.PrimitiveIntMapper();
-            autojson.bind.MapperCache.put(mapper);
-        }
-        return mapper.read(parser);
-    }
-
-    private void urlWrite(autojson.stream.JsonGenerator generator, ObjectImage.Thumbnail element) throws java.io.IOException {
-        autojson.bind.java.lang.StringMapper mapper = autojson.bind.MapperCache.get(autojson.bind.java.lang.StringMapper.class);
-        if (mapper == null) {
-            mapper = new autojson.bind.java.lang.StringMapper();
-            autojson.bind.MapperCache.put(mapper);
-        }
         generator.writeName("Url");
-        mapper.write(generator, element.url());
-    }
-
-    private void heightWrite(autojson.stream.JsonGenerator generator, ObjectImage.Thumbnail element) throws java.io.IOException {
-        autojson.bind.java.lang.PrimitiveIntMapper mapper = autojson.bind.MapperCache.get(autojson.bind.java.lang.PrimitiveIntMapper.class);
-        if (mapper == null) {
-            mapper = new autojson.bind.java.lang.PrimitiveIntMapper();
-            autojson.bind.MapperCache.put(mapper);
-        }
+        urlMapper.write(generator, element.url());
         generator.writeName("Height");
-        mapper.write(generator, element.height());
-    }
-
-    private void widthWrite(autojson.stream.JsonGenerator generator, ObjectImage.Thumbnail element) throws java.io.IOException {
-        autojson.bind.java.lang.PrimitiveIntMapper mapper = autojson.bind.MapperCache.get(autojson.bind.java.lang.PrimitiveIntMapper.class);
-        if (mapper == null) {
-            mapper = new autojson.bind.java.lang.PrimitiveIntMapper();
-            autojson.bind.MapperCache.put(mapper);
-        }
+        heightMapper.write(generator, element.height());
         generator.writeName("Width");
-        mapper.write(generator, element.width());
+        widthMapper.write(generator, element.width());
+        generator.writeEndObject();
     }
 
 }

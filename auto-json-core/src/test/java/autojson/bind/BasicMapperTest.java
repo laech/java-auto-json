@@ -80,7 +80,7 @@ public abstract class BasicMapperTest extends MapperTest {
         });
     }
 
-    public <T> BasicMapperTest(Object mapper, T expected) {
+    public BasicMapperTest(Object mapper, Object expected) {
         super(mapper, expected,
                 expected instanceof String
                         ? "\"" + expected + "\""

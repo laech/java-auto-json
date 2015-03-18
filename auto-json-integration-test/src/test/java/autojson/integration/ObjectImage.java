@@ -3,6 +3,8 @@ package autojson.integration;
 import autojson.AutoJson;
 import com.google.auto.value.AutoValue;
 
+import java.util.List;
+
 // Example from https://tools.ietf.org/html/rfc7159
 @AutoJson
 @AutoValue
@@ -30,9 +32,8 @@ abstract class ObjectImage {
         @AutoJson.Name("Animated")
         abstract boolean animated();
 
-        // TODO
-        // @AutoJson.Name("IDs")
-        // abstract List<Integer> ids();
+        @AutoJson.Name("IDs")
+        abstract List<Integer> ids();
 
     }
 

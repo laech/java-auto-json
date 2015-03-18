@@ -1,15 +1,18 @@
 package autojson.integration;
 
+import autojson.bind.Mapper;
 import autojson.bind.MapperTest;
-import autojson.bind.ValueMapper;
 import autojson.integration.sub.AutoJson_CrossPackageObject;
 import autojson.integration.sub.CrossPackageObject;
+import autovalue.shaded.com.google.common.common.collect.Sets;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Set;
 
 import static java.util.Arrays.asList;
 
@@ -79,7 +82,8 @@ public abstract class AutoJsonMapperTest extends MapperTest {
                         // Example from https://tools.ietf.org/html/rfc7159
                         new AutoJson_ObjectImage(),
                         new AutoValue_ObjectImage(new AutoValue_ObjectImage_Image(800, 600, "View from 15th Floor",
-                                new AutoValue_ObjectImage_Thumbnail("http://www.example.com/image/481989943", 125, 100), false)
+                                new AutoValue_ObjectImage_Thumbnail("http://www.example.com/image/481989943", 125, 100),
+                                false, asList(116, 943, 234, 38793))
                         ), "" +
                         "{" +
                         "\"Image\":{" +
@@ -91,17 +95,90 @@ public abstract class AutoJsonMapperTest extends MapperTest {
                         "\"Height\":125," +
                         "\"Width\":100" +
                         "}," +
-                        "\"Animated\":false" +
-//                        "\"Animated\":false," +
-//                                "\"IDs\":[116,943,234,38793]" + // TODO
+                        "\"Animated\":false," +
+                        "\"IDs\":[116,943,234,38793]" +
                         "}" +
+                        "}"
+                },
+
+                {
+                        new AutoJson_ObjectListObject(),
+                        new AutoValue_ObjectListObject(Arrays.<ObjectString>asList(
+                                new AutoValue_ObjectString("a"),
+                                new AutoValue_ObjectString("b"))
+                        ), "" +
+                        "{" +
+                        "\"values\":[" +
+                        "{\"value\":\"a\"}," +
+                        "{\"value\":\"b\"}" +
+                        "]" +
+                        "}"
+                },
+
+                {
+                        new AutoJson_ObjectSetObject(),
+                        new AutoValue_ObjectSetObject(Sets.<ObjectInt>newHashSet(
+                                new AutoValue_ObjectInt(1),
+                                new AutoValue_ObjectInt(2))
+                        ), "" +
+                        "{" +
+                        "\"values\":[" +
+                        "{\"value\":1}," +
+                        "{\"value\":2}" +
+                        "]" +
+                        "}"
+                },
+
+                {
+                        new AutoJson_ObjectListSetObject(),
+                        new AutoValue_ObjectListSetObject(Arrays.<Set<ObjectInt>>asList(
+                                Sets.<ObjectInt>newHashSet(
+                                        new AutoValue_ObjectInt(1),
+                                        new AutoValue_ObjectInt(2)
+                                ),
+                                Sets.<ObjectInt>newHashSet(
+                                        new AutoValue_ObjectInt(3)
+                                )
+                        )
+                        ), "" +
+                        "{" +
+                        "\"values\":[" +
+                        "[" +
+                        "{\"value\":1}," +
+                        "{\"value\":2}" +
+                        "]," +
+                        "[" +
+                        "{\"value\":3}" +
+                        "]" +
+                        "]" +
+                        "}"
+                },
+
+                {
+                        new AutoJson_ObjectListListListInt(),
+                        new AutoValue_ObjectListListListInt(asList(
+                                asList(asList(1, 2)),
+                                asList(asList(3)),
+                                asList(asList(4))
+                        )), "" +
+                        "{" +
+                        "\"values\":[" +
+                        "[[1,2]]," +
+                        "[[3]]," +
+                        "[[4]]" +
+                        "]" +
                         "}"
                 },
 
         });
     }
 
-    public AutoJsonMapperTest(ValueMapper<Object> mapper, Object object, String json) {
+    @SafeVarargs
+    private static <T> Set<T> set(T... args) {
+        return Sets.newHashSet(args);
+    }
+
+    public AutoJsonMapperTest(Mapper<Object> mapper, Object object, String json) {
         super(mapper, object, json);
     }
 

@@ -19,7 +19,7 @@ public abstract class MapperTest {
     private final Object object;
     private final String json;
 
-    public <T> MapperTest(Object mapper, T object, String json) {
+    public MapperTest(Object mapper, Object object, String json) {
         this.mapper = mapper;
         this.object = object;
         this.json = json;
@@ -29,8 +29,8 @@ public abstract class MapperTest {
     public void read() throws Exception {
         JsonParser parser = factory().createParser(new StringReader(json));
 
-        if (mapper instanceof ValueMapper) {
-            assertThat(((ValueMapper<?>) mapper).read(parser)).isEqualTo(object);
+        if (mapper instanceof Mapper) {
+            assertThat(((Mapper<?>) mapper).read(parser)).isEqualTo(object);
 
         } else if (mapper instanceof PrimitiveBooleanMapper) {
             assertThat(((PrimitiveBooleanMapper) mapper).read(parser)).isEqualTo(object);
@@ -44,7 +44,6 @@ public abstract class MapperTest {
         } else {
             throw new AssertionError(mapper.toString());
         }
-
     }
 
     @Test
@@ -53,8 +52,8 @@ public abstract class MapperTest {
         StringWriter writer = new StringWriter();
         JsonGenerator generator = factory().createGenerator(writer);
 
-        if (mapper instanceof ValueMapper) {
-            ((ValueMapper<Object>) mapper).write(generator, object);
+        if (mapper instanceof Mapper) {
+            ((Mapper<Object>) mapper).write(generator, object);
 
         } else if (mapper instanceof PrimitiveBooleanMapper) {
             ((PrimitiveBooleanMapper) mapper).write(generator, (boolean) object);

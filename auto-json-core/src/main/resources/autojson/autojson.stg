@@ -8,6 +8,8 @@ main(model) ::= <<
 @javax.annotation.Generated("<model.processor.class.canonicalName>")
 public final class <model.generatedTypeName> extends autojson.bind.NullableMapper\<<model.targetTypeName>\> {
 
+    <model.variables:declare_mapper(); separator="\n">
+
     <! Underscore our variable names to minimise conflict with model supplied variables. !>
     @Override
     protected <model.targetTypeName> readNotNull(autojson.stream.JsonParser _parser) throws java.io.IOException {
@@ -35,8 +37,6 @@ public final class <model.generatedTypeName> extends autojson.bind.NullableMappe
         generator.writeEndObject();
     }
 
-    <model.variables:reader(); separator="\n">
-    <model.variables:writer(); separator="\n">
 }
 
 >>
@@ -45,41 +45,21 @@ package(package) ::= <<
 <if(!package.unnamed)>package <package.qualifiedName>;<endif>
 >>
 
+declare_mapper(var) ::= <<
+private static final <var.mapper.type> <var.mapper.name> = <var.mapper.creation>;
+>>
+
 declare(var) ::= <<
 <var.type> <var.varName> = <var.defaultValueSource; null="null">;
 >>
 
 case(var) ::= <<
 case "<var.jsonName>":
-    <var.varName> = <var.varName>Read(_parser);
+    <var.varName> = <var.mapper.name>.read(_parser);
     break;
 >>
 
-reader(var) ::= <<
-private <var.type> <var.varName>Read(autojson.stream.JsonParser parser) throws java.io.IOException {
-    <var.mapperClassName> mapper = autojson.bind.MapperCache.get(<var.mapperClassName>.class);
-    if (mapper == null) {
-        mapper = new <var.mapperClassName>();
-        autojson.bind.MapperCache.put(mapper);
-    }
-    return mapper.read(parser);
-}
-
->>
-
 write(var) ::= <<
-<var.varName>Write(generator, element);
->>
-
-writer(var) ::= <<
-private void <var.varName>Write(autojson.stream.JsonGenerator generator, <model.targetTypeName> element) throws java.io.IOException {
-    <var.mapperClassName> mapper = autojson.bind.MapperCache.get(<var.mapperClassName>.class);
-    if (mapper == null) {
-        mapper = new <var.mapperClassName>();
-        autojson.bind.MapperCache.put(mapper);
-    }
-    generator.writeName("<var.jsonName>");
-    mapper.write(generator, element<var.valueAccessorSource>);
-}
-
+generator.writeName("<var.jsonName>");
+<var.mapper.name>.write(generator, element<var.valueAccessorSource>);
 >>

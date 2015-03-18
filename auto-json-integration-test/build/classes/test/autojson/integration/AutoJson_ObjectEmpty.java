@@ -3,6 +3,7 @@ package autojson.integration;
 @javax.annotation.Generated("autojson.AutoJsonProcessor")
 public final class AutoJson_ObjectEmpty extends autojson.bind.NullableMapper<ObjectEmpty> {
 
+
     @Override
     protected ObjectEmpty readNotNull(autojson.stream.JsonParser _parser) throws java.io.IOException {
         if (_parser.getToken() != autojson.stream.JsonToken.BEGIN_OBJECT) {

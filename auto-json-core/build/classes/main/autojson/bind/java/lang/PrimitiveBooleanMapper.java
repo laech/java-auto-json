@@ -7,6 +7,10 @@ public final class PrimitiveBooleanMapper {
         if (!parser.next()) {
             throw new IllegalStateException("No more token from parser");
         }
+        return readCurrent(parser);
+    }
+
+    public boolean readCurrent(autojson.stream.JsonParser parser) throws java.io.IOException {
         return parser.getBoolean();
     }
 

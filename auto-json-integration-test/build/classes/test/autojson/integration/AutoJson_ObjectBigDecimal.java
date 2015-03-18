@@ -3,6 +3,8 @@ package autojson.integration;
 @javax.annotation.Generated("autojson.AutoJsonProcessor")
 public final class AutoJson_ObjectBigDecimal extends autojson.bind.NullableMapper<ObjectBigDecimal> {
 
+    private static final autojson.bind.Mapper<java.math.BigDecimal> valueMapper = new autojson.bind.java.math.BigDecimalMapper();
+
     @Override
     protected ObjectBigDecimal readNotNull(autojson.stream.JsonParser _parser) throws java.io.IOException {
         if (_parser.getToken() != autojson.stream.JsonToken.BEGIN_OBJECT) {
@@ -14,7 +16,7 @@ public final class AutoJson_ObjectBigDecimal extends autojson.bind.NullableMappe
         while (_parser.next() && _parser.getToken() != autojson.stream.JsonToken.END_OBJECT) {
             switch (_parser.getName()) {
                 case "value":
-                    value = valueRead(_parser);
+                    value = valueMapper.read(_parser);
                     break;
                 default:
                     _parser.skipValue();
@@ -27,27 +29,9 @@ public final class AutoJson_ObjectBigDecimal extends autojson.bind.NullableMappe
     @Override
     protected void writeNotNull(autojson.stream.JsonGenerator generator, ObjectBigDecimal element) throws java.io.IOException {
         generator.writeBeginObject();
-        valueWrite(generator, element);
-        generator.writeEndObject();
-    }
-
-    private java.math.BigDecimal valueRead(autojson.stream.JsonParser parser) throws java.io.IOException {
-        autojson.bind.java.math.BigDecimalMapper mapper = autojson.bind.MapperCache.get(autojson.bind.java.math.BigDecimalMapper.class);
-        if (mapper == null) {
-            mapper = new autojson.bind.java.math.BigDecimalMapper();
-            autojson.bind.MapperCache.put(mapper);
-        }
-        return mapper.read(parser);
-    }
-
-    private void valueWrite(autojson.stream.JsonGenerator generator, ObjectBigDecimal element) throws java.io.IOException {
-        autojson.bind.java.math.BigDecimalMapper mapper = autojson.bind.MapperCache.get(autojson.bind.java.math.BigDecimalMapper.class);
-        if (mapper == null) {
-            mapper = new autojson.bind.java.math.BigDecimalMapper();
-            autojson.bind.MapperCache.put(mapper);
-        }
         generator.writeName("value");
-        mapper.write(generator, element.value());
+        valueMapper.write(generator, element.value());
+        generator.writeEndObject();
     }
 
 }

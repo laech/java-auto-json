@@ -1,12 +1,12 @@
 package autojson.provider.jackson;
 
-import autojson.bind.ValueMapper;
+import autojson.bind.Mapper;
 import autojson.integration.AutoJsonMapperTest;
 import autojson.stream.JsonFactory;
 
 public final class JacksonAutoJsonMapperTest extends AutoJsonMapperTest {
 
-    public JacksonAutoJsonMapperTest(ValueMapper<Object> mapper, Object expected, String json) {
+    public JacksonAutoJsonMapperTest(Mapper<Object> mapper, Object expected, String json) {
         super(mapper, expected, json);
     }
 

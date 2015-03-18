@@ -6,23 +6,37 @@ import autojson.stream.JsonToken;
 
 import java.io.IOException;
 
-public abstract class NullableMapper<T> implements ValueMapper<T> {
+import static autojson.stream.JsonToken.NULL;
+
+/**
+ * Base mapper performs simple book keeping and null checks.
+ */
+public abstract class NullableMapper<T> implements Mapper<T> {
 
     @Override
-    public final T read(JsonParser parser) throws IOException {
+    public T read(JsonParser parser) throws IOException {
         if (!parser.next()) {
             throw new IllegalStateException("No more token from parser");
         }
-        if (parser.getToken() == JsonToken.NULL) {
+        return readCurrent(parser);
+    }
+
+    @Override
+    public T readCurrent(JsonParser parser) throws IOException {
+        if (parser.getToken() == NULL) {
             return null;
         }
         return readNotNull(parser);
     }
 
+    /**
+     * Reads a result by reading from the current token, the token has been
+     * checked and it's not {@link JsonToken#NULL}.
+     */
     protected abstract T readNotNull(JsonParser parser) throws IOException;
 
     @Override
-    public final void write(JsonGenerator generator, T value) throws IOException {
+    public void write(JsonGenerator generator, T value) throws IOException {
         if (value == null) {
             generator.writeNull();
         } else {
@@ -30,6 +44,9 @@ public abstract class NullableMapper<T> implements ValueMapper<T> {
         }
     }
 
+    /**
+     * Writes the given non-null value to JSON.
+     */
     protected abstract void writeNotNull(JsonGenerator generator, T value) throws IOException;
 
 }

@@ -7,6 +7,10 @@ public final class PrimitiveLongMapper {
         if (!parser.next()) {
             throw new IllegalStateException("No more token from parser");
         }
+        return readCurrent(parser);
+    }
+
+    public long readCurrent(autojson.stream.JsonParser parser) throws java.io.IOException {
         return parser.getLong();
     }
 

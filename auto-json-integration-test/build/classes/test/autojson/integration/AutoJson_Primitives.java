@@ -3,6 +3,12 @@ package autojson.integration;
 @javax.annotation.Generated("autojson.AutoJsonProcessor")
 public final class AutoJson_Primitives extends autojson.bind.NullableMapper<Primitives> {
 
+    private static final autojson.bind.java.lang.PrimitiveIntMapper intValueMapper = new autojson.bind.java.lang.PrimitiveIntMapper();
+    private static final autojson.bind.java.lang.PrimitiveLongMapper longValueMapper = new autojson.bind.java.lang.PrimitiveLongMapper();
+    private static final autojson.bind.Mapper<java.math.BigDecimal> decimalValueMapper = new autojson.bind.java.math.BigDecimalMapper();
+    private static final autojson.bind.java.lang.PrimitiveBooleanMapper booleanValueMapper = new autojson.bind.java.lang.PrimitiveBooleanMapper();
+    private static final autojson.bind.Mapper<java.lang.String> stringValueMapper = new autojson.bind.java.lang.StringMapper();
+
     @Override
     protected Primitives readNotNull(autojson.stream.JsonParser _parser) throws java.io.IOException {
         if (_parser.getToken() != autojson.stream.JsonToken.BEGIN_OBJECT) {
@@ -18,19 +24,19 @@ public final class AutoJson_Primitives extends autojson.bind.NullableMapper<Prim
         while (_parser.next() && _parser.getToken() != autojson.stream.JsonToken.END_OBJECT) {
             switch (_parser.getName()) {
                 case "intValue":
-                    intValue = intValueRead(_parser);
+                    intValue = intValueMapper.read(_parser);
                     break;
                 case "longValue":
-                    longValue = longValueRead(_parser);
+                    longValue = longValueMapper.read(_parser);
                     break;
                 case "decimalValue":
-                    decimalValue = decimalValueRead(_parser);
+                    decimalValue = decimalValueMapper.read(_parser);
                     break;
                 case "booleanValue":
-                    booleanValue = booleanValueRead(_parser);
+                    booleanValue = booleanValueMapper.read(_parser);
                     break;
                 case "stringValue":
-                    stringValue = stringValueRead(_parser);
+                    stringValue = stringValueMapper.read(_parser);
                     break;
                 default:
                     _parser.skipValue();
@@ -43,107 +49,17 @@ public final class AutoJson_Primitives extends autojson.bind.NullableMapper<Prim
     @Override
     protected void writeNotNull(autojson.stream.JsonGenerator generator, Primitives element) throws java.io.IOException {
         generator.writeBeginObject();
-        intValueWrite(generator, element);
-        longValueWrite(generator, element);
-        decimalValueWrite(generator, element);
-        booleanValueWrite(generator, element);
-        stringValueWrite(generator, element);
-        generator.writeEndObject();
-    }
-
-    private int intValueRead(autojson.stream.JsonParser parser) throws java.io.IOException {
-        autojson.bind.java.lang.PrimitiveIntMapper mapper = autojson.bind.MapperCache.get(autojson.bind.java.lang.PrimitiveIntMapper.class);
-        if (mapper == null) {
-            mapper = new autojson.bind.java.lang.PrimitiveIntMapper();
-            autojson.bind.MapperCache.put(mapper);
-        }
-        return mapper.read(parser);
-    }
-
-    private long longValueRead(autojson.stream.JsonParser parser) throws java.io.IOException {
-        autojson.bind.java.lang.PrimitiveLongMapper mapper = autojson.bind.MapperCache.get(autojson.bind.java.lang.PrimitiveLongMapper.class);
-        if (mapper == null) {
-            mapper = new autojson.bind.java.lang.PrimitiveLongMapper();
-            autojson.bind.MapperCache.put(mapper);
-        }
-        return mapper.read(parser);
-    }
-
-    private java.math.BigDecimal decimalValueRead(autojson.stream.JsonParser parser) throws java.io.IOException {
-        autojson.bind.java.math.BigDecimalMapper mapper = autojson.bind.MapperCache.get(autojson.bind.java.math.BigDecimalMapper.class);
-        if (mapper == null) {
-            mapper = new autojson.bind.java.math.BigDecimalMapper();
-            autojson.bind.MapperCache.put(mapper);
-        }
-        return mapper.read(parser);
-    }
-
-    private boolean booleanValueRead(autojson.stream.JsonParser parser) throws java.io.IOException {
-        autojson.bind.java.lang.PrimitiveBooleanMapper mapper = autojson.bind.MapperCache.get(autojson.bind.java.lang.PrimitiveBooleanMapper.class);
-        if (mapper == null) {
-            mapper = new autojson.bind.java.lang.PrimitiveBooleanMapper();
-            autojson.bind.MapperCache.put(mapper);
-        }
-        return mapper.read(parser);
-    }
-
-    private java.lang.String stringValueRead(autojson.stream.JsonParser parser) throws java.io.IOException {
-        autojson.bind.java.lang.StringMapper mapper = autojson.bind.MapperCache.get(autojson.bind.java.lang.StringMapper.class);
-        if (mapper == null) {
-            mapper = new autojson.bind.java.lang.StringMapper();
-            autojson.bind.MapperCache.put(mapper);
-        }
-        return mapper.read(parser);
-    }
-
-    private void intValueWrite(autojson.stream.JsonGenerator generator, Primitives element) throws java.io.IOException {
-        autojson.bind.java.lang.PrimitiveIntMapper mapper = autojson.bind.MapperCache.get(autojson.bind.java.lang.PrimitiveIntMapper.class);
-        if (mapper == null) {
-            mapper = new autojson.bind.java.lang.PrimitiveIntMapper();
-            autojson.bind.MapperCache.put(mapper);
-        }
         generator.writeName("intValue");
-        mapper.write(generator, element.intValue());
-    }
-
-    private void longValueWrite(autojson.stream.JsonGenerator generator, Primitives element) throws java.io.IOException {
-        autojson.bind.java.lang.PrimitiveLongMapper mapper = autojson.bind.MapperCache.get(autojson.bind.java.lang.PrimitiveLongMapper.class);
-        if (mapper == null) {
-            mapper = new autojson.bind.java.lang.PrimitiveLongMapper();
-            autojson.bind.MapperCache.put(mapper);
-        }
+        intValueMapper.write(generator, element.intValue());
         generator.writeName("longValue");
-        mapper.write(generator, element.longValue());
-    }
-
-    private void decimalValueWrite(autojson.stream.JsonGenerator generator, Primitives element) throws java.io.IOException {
-        autojson.bind.java.math.BigDecimalMapper mapper = autojson.bind.MapperCache.get(autojson.bind.java.math.BigDecimalMapper.class);
-        if (mapper == null) {
-            mapper = new autojson.bind.java.math.BigDecimalMapper();
-            autojson.bind.MapperCache.put(mapper);
-        }
+        longValueMapper.write(generator, element.longValue());
         generator.writeName("decimalValue");
-        mapper.write(generator, element.decimalValue());
-    }
-
-    private void booleanValueWrite(autojson.stream.JsonGenerator generator, Primitives element) throws java.io.IOException {
-        autojson.bind.java.lang.PrimitiveBooleanMapper mapper = autojson.bind.MapperCache.get(autojson.bind.java.lang.PrimitiveBooleanMapper.class);
-        if (mapper == null) {
-            mapper = new autojson.bind.java.lang.PrimitiveBooleanMapper();
-            autojson.bind.MapperCache.put(mapper);
-        }
+        decimalValueMapper.write(generator, element.decimalValue());
         generator.writeName("booleanValue");
-        mapper.write(generator, element.booleanValue());
-    }
-
-    private void stringValueWrite(autojson.stream.JsonGenerator generator, Primitives element) throws java.io.IOException {
-        autojson.bind.java.lang.StringMapper mapper = autojson.bind.MapperCache.get(autojson.bind.java.lang.StringMapper.class);
-        if (mapper == null) {
-            mapper = new autojson.bind.java.lang.StringMapper();
-            autojson.bind.MapperCache.put(mapper);
-        }
+        booleanValueMapper.write(generator, element.booleanValue());
         generator.writeName("stringValue");
-        mapper.write(generator, element.stringValue());
+        stringValueMapper.write(generator, element.stringValue());
+        generator.writeEndObject();
     }
 
 }

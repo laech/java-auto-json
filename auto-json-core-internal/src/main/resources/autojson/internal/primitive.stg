@@ -8,6 +8,10 @@ public final class <model.generatedClassSimpleName> {
         if (!parser.next()) {
             throw new IllegalStateException("No more token from parser");
         }
+        return readCurrent(parser);
+    }
+
+    public <model.targetTypeQualifiedName> readCurrent(autojson.stream.JsonParser parser) throws java.io.IOException {
         return <model.parsingSource>;
     }
 
