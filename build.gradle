@@ -7,12 +7,6 @@ subprojects {
     sourceCompatibility = 1.7
     targetCompatibility = 1.7
 
-    sourceSets {
-        main {
-            output.resourcesDir = "${buildDir}/classes/main"
-        }
-    }
-
     dependencies {
         testCompile 'junit:junit:4.12'
         testCompile 'com.google.truth:truth:0.25'
@@ -42,6 +36,8 @@ project(':auto-json-core-internal') {
     dependencies {
         compile 'org.antlr:ST4:4.0.8'
         compile 'com.google.auto.service:auto-service:1.0-rc2'
+        compile 'com.google.auto.value:auto-value:1.0'
+        compile 'com.google.code.findbugs:jsr305:3.0.0'
     }
 
 }
@@ -50,8 +46,6 @@ project(':auto-json-core') {
 
     dependencies {
         compile project(':auto-json-core-internal')
-        compile 'com.google.auto.value:auto-value:1.0'
-        compile 'com.google.code.findbugs:jsr305:3.0.0'
     }
 
 }

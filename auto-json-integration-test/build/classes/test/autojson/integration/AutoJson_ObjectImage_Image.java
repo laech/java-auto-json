@@ -8,7 +8,7 @@ public final class AutoJson_ObjectImage_Image extends autojson.bind.NullableMapp
     private static final autojson.bind.Mapper<java.lang.String> titleMapper = new autojson.bind.java.lang.StringMapper();
     private static final autojson.bind.Mapper<autojson.integration.ObjectImage.Thumbnail> thumbnailMapper = new AutoJson_ObjectImage_Thumbnail();
     private static final autojson.bind.java.lang.PrimitiveBooleanMapper animatedMapper = new autojson.bind.java.lang.PrimitiveBooleanMapper();
-    private static final autojson.bind.Mapper<java.util.List<java.lang.Integer>> idsMapper = new autojson.bind.java.util.ListMapper(new autojson.bind.java.lang.IntegerMapper());
+    private static final autojson.bind.Mapper<java.util.List<java.lang.Integer>> idsMapper = new autojson.bind.java.util.ListMapper<>(new autojson.bind.java.lang.IntegerMapper());
 
     @Override
     protected ObjectImage.Image readNotNull(autojson.stream.JsonParser _parser) throws java.io.IOException {

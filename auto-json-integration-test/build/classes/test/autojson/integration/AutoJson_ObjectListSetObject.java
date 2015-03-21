@@ -3,7 +3,7 @@ package autojson.integration;
 @javax.annotation.Generated("autojson.AutoJsonProcessor")
 public final class AutoJson_ObjectListSetObject extends autojson.bind.NullableMapper<ObjectListSetObject> {
 
-    private static final autojson.bind.Mapper<java.util.List<java.util.Set<autojson.integration.ObjectInt>>> valuesMapper = new autojson.bind.java.util.ListMapper(new autojson.bind.java.util.SetMapper(new AutoJson_ObjectInt()));
+    private static final autojson.bind.Mapper<java.util.List<java.util.Set<autojson.integration.ObjectInt>>> valuesMapper = new autojson.bind.java.util.ListMapper<>(new autojson.bind.java.util.SetMapper<>(new AutoJson_ObjectInt()));
 
     @Override
     protected ObjectListSetObject readNotNull(autojson.stream.JsonParser _parser) throws java.io.IOException {

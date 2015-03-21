@@ -1,5 +1,5 @@
 @SimpleMappers({
-        @SimpleMapper(type = BigDecimal.class, parse = "new java.math.BigDecimal(parser.getString())"),
+        @SimpleMapper(value = BigDecimal.class, parse = "new java.math.BigDecimal(parser.getString())"),
 })
 package autojson.bind.java.math;
 

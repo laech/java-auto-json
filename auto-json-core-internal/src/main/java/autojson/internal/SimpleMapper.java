@@ -19,10 +19,10 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
  * <pre>
  *
  * &#64;SimpleMappers({
- *     &#64;SimpleMapper(type = long.class, name = "PrimitiveLongMapper"),
- *     &#64;SimpleMapper(type = Long.class),
- *     &#64;SimpleMapper(type = Integer.class),
- *     &#64;SimpleMapper(type = BigDecimal.class, parse = "new java.math.BigDecimal(parser.getString())"),
+ *     &#64;SimpleMapper(value = long.class, name = "PrimitiveLongMapper"),
+ *     &#64;SimpleMapper(value = Long.class),
+ *     &#64;SimpleMapper(value = Integer.class),
+ *     &#64;SimpleMapper(value = BigDecimal.class, parse = "new java.math.BigDecimal(parser.getString())"),
  * })
  * package my.package;
  * </pre>
@@ -36,7 +36,7 @@ public @interface SimpleMapper {
     /**
      * The target type to generate the mapper for.
      */
-    Class<?> type();
+    Class<?> value();
 
     /**
      * The name of the generated mapper, if not specified, will use the
@@ -55,7 +55,7 @@ public @interface SimpleMapper {
     String parse() default "";
 
     /**
-     * The simple source code for writting the value to the generator, a variable
+     * The simple source code for writing the value to the generator, a variable
      * {@code generator} of type {@code autojson.stream.JsonGenerator} and a variable
      * {@code value} of the target type is in scope.
      * If not specified will use the default: {@code generator.writeValue(value)}

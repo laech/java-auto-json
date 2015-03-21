@@ -9,23 +9,34 @@ import autojson.bind.java.lang.PrimitiveIntMapper;
 import autojson.bind.java.lang.PrimitiveLongMapper;
 import autojson.bind.java.lang.StringMapper;
 import autojson.bind.java.math.BigDecimalMapper;
+import autojson.bind.java.util.ArrayListMapper;
+import autojson.bind.java.util.CollectionMapper;
+import autojson.bind.java.util.HashSetMapper;
+import autojson.bind.java.util.LinkedHashSetMapper;
+import autojson.bind.java.util.LinkedListMapper;
 import autojson.bind.java.util.ListMapper;
+import autojson.bind.java.util.NavigableSetMapper;
 import autojson.bind.java.util.SetMapper;
-import autovalue.shaded.com.google.common.common.base.Joiner;
+import autojson.bind.java.util.TreeSetMapper;
 import com.google.common.base.Strings;
 
 import javax.annotation.processing.ProcessingEnvironment;
-import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.NavigableSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import static autojson.TemplateModel.getGeneratedTypeName;
 import static javax.tools.Diagnostic.Kind.ERROR;
@@ -34,11 +45,8 @@ final class Variable {
 
     private static final Map<String, String> mappers;
 
-    public static void main(String[] args) {
-        System.out.println(int.class.getCanonicalName());
-    }
-
     static {
+        // TODO better registration
         mappers = new HashMap<>();
         mappers.put(boolean.class.getCanonicalName(), PrimitiveBooleanMapper.class.getCanonicalName());
         mappers.put(int.class.getCanonicalName(), PrimitiveIntMapper.class.getCanonicalName());
@@ -48,25 +56,30 @@ final class Variable {
         mappers.put(Long.class.getCanonicalName(), LongMapper.class.getCanonicalName());
         mappers.put(String.class.getCanonicalName(), StringMapper.class.getCanonicalName());
         mappers.put(BigDecimal.class.getCanonicalName(), BigDecimalMapper.class.getCanonicalName());
+        mappers.put(ArrayList.class.getCanonicalName(), ArrayListMapper.class.getCanonicalName());
+        mappers.put(LinkedList.class.getCanonicalName(), LinkedListMapper.class.getCanonicalName());
         mappers.put(List.class.getCanonicalName(), ListMapper.class.getCanonicalName());
+        mappers.put(HashSet.class.getCanonicalName(), HashSetMapper.class.getCanonicalName());
+        mappers.put(LinkedHashSet.class.getCanonicalName(), LinkedHashSetMapper.class.getCanonicalName());
+        mappers.put(TreeSet.class.getCanonicalName(), TreeSetMapper.class.getCanonicalName());
+        mappers.put(NavigableSet.class.getCanonicalName(), NavigableSetMapper.class.getCanonicalName());
         mappers.put(Set.class.getCanonicalName(), SetMapper.class.getCanonicalName());
+        mappers.put(Collection.class.getCanonicalName(), CollectionMapper.class.getCanonicalName());
     }
 
     private final ProcessingEnvironment env;
-    private final Element element;
     private final TypeMirror type;
     private final String varName;
     private final String jsonName;
     private final String valueAccessorSource;
     private final String defaultValueSource;
 
-    Variable(ProcessingEnvironment env, Element element, TypeMirror type, String varName, String jsonName, String valueAccessorSource) {
-        this(env, element, type, varName, jsonName, valueAccessorSource, Defaults.getSource(type));
+    Variable(ProcessingEnvironment env, TypeMirror type, String varName, String jsonName, String valueAccessorSource) {
+        this(env, type, varName, jsonName, valueAccessorSource, Defaults.getSource(type));
     }
 
-    Variable(ProcessingEnvironment env, Element element, TypeMirror type, String varName, String jsonName, String valueAccessorSource, String defaultValueSource) {
+    Variable(ProcessingEnvironment env, TypeMirror type, String varName, String jsonName, String valueAccessorSource, String defaultValueSource) {
         this.env = env;
-        this.element = element;
         this.type = type;
         this.varName = varName;
         this.jsonName = jsonName;
@@ -100,18 +113,26 @@ final class Variable {
         return defaultValueSource;
     }
 
-    private TypeElement getTypeElement() {
-        return (TypeElement) env.getTypeUtils().asElement(getType());
-    }
-
     public MapperVar getMapper() {
         String type = getType().getKind().isPrimitive()
                 ? getMapperClassName()
                 : Mapper.class.getCanonicalName() + "<" + getType() + ">";
+
         String name = getVarName() + "Mapper";
-        List<String> classes = getMapperClassNames();
-        String creation = "new " + Joiner.on("(new ").join(classes) + "(" + Strings.repeat(")", classes.size());
-        return MapperVar.create(type, name, creation);
+
+        List<TypeMirror> mappers = getMapperTypes();
+        StringBuilder creation = new StringBuilder();
+        for (TypeMirror mapper : mappers) {
+            creation.append("new ");
+            creation.append(getMapperClassName(mapper));
+            if (mapper instanceof DeclaredType && !((DeclaredType) mapper).getTypeArguments().isEmpty()) {
+                creation.append("<>");
+            }
+            creation.append("(");
+        }
+        creation.append(Strings.repeat(")", mappers.size()));
+
+        return MapperVar.create(type, name, creation.toString());
     }
 
     private static boolean isAutoJson(TypeElement type) {
@@ -131,13 +152,8 @@ final class Variable {
         return result;
     }
 
-    public List<String> getMapperClassNames() {
-        List<TypeMirror> types = unwrap(getType(), new ArrayList<TypeMirror>());
-        List<String> mappers = new ArrayList<>(types.size());
-        for (TypeMirror type : types) {
-            mappers.add(getMapperClassName(type));
-        }
-        return mappers;
+    private List<TypeMirror> getMapperTypes() {
+        return unwrap(getType(), new ArrayList<TypeMirror>());
     }
 
     public String getMapperClassName() {

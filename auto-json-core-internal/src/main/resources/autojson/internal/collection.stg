@@ -1,0 +1,25 @@
+main(model) ::= <<
+package <model.packageName>;
+
+@javax.annotation.Generated("<model.processorClassName>")
+public final class <model.generatedClassSimpleName>\<T> extends autojson.bind.NullableMapper\<<model.declaredTypeQualifiedName>\<T>\> {
+
+    private final autojson.bind.Mapper\<T> delegate;
+
+    public <model.generatedClassSimpleName>(autojson.bind.Mapper\<T> delegate) {
+        this.delegate = java.util.Objects.requireNonNull(delegate, "delegate");
+    }
+
+    @Override
+    protected <model.declaredTypeQualifiedName>\<T> readNotNull(autojson.stream.JsonParser parser) throws java.io.IOException {
+        return autojson.bind.Mappers.readJsonArray(delegate, parser, new <model.targetTypeQualifiedName>\<T>());
+    }
+
+    @Override
+    protected void writeNotNull(autojson.stream.JsonGenerator generator, <model.declaredTypeQualifiedName>\<T> value) throws java.io.IOException {
+        autojson.bind.Mappers.writeJsonArray(delegate, generator, value);
+    }
+
+}
+
+>>

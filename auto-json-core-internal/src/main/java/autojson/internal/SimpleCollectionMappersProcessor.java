@@ -4,6 +4,7 @@ import com.google.auto.service.AutoService;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 
+import javax.annotation.processing.Filer;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
@@ -21,21 +22,17 @@ import java.util.List;
 import java.util.Set;
 
 import static java.util.Collections.singleton;
-import static java.util.Locale.ENGLISH;
 import static javax.lang.model.SourceVersion.latestSupported;
 
 @AutoService(Processor.class)
-public final class SimpleMappersProcessor extends BaseProcessor {
+public final class SimpleCollectionMappersProcessor extends BaseProcessor {
 
-    private static final STGroup STG_PRIMITIVE = new STGroupFile(
-            SimpleMappersProcessor.class.getResource("primitive.stg"), "utf-8", '<', '>');
-
-    private static final STGroup STG_OBJECT = new STGroupFile(
-            SimpleMappersProcessor.class.getResource("object.stg"), "utf-8", '<', '>');
+    private static final STGroup STG = new STGroupFile(
+            SimpleCollectionMappersProcessor.class.getResource("collection.stg"), "utf-8", '<', '>');
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
-        return singleton(SimpleMappers.class.getName());
+        return singleton(SimpleCollectionMappers.class.getName());
     }
 
     @Override
@@ -46,15 +43,17 @@ public final class SimpleMappersProcessor extends BaseProcessor {
     @Override
     protected void process(TypeElement annotation, Element pkg, RoundEnvironment round) throws IOException {
         List<Model> models = new ArrayList<>();
-        SimpleMappers group = pkg.getAnnotation(SimpleMappers.class);
-        for (SimpleMapper mapper : group.value()) {
+        SimpleCollectionMappers group = pkg.getAnnotation(SimpleCollectionMappers.class);
+        for (SimpleCollectionMapper mapper : group.value()) {
             models.add(new Model(processingEnv, (PackageElement) pkg, mapper));
         }
 
+        Filer filer = processingEnv.getFiler();
         for (Model model : models) {
-            JavaFileObject file = processingEnv.getFiler().createSourceFile(model.getGeneratedClassQualifiedName(), pkg);
+            String name = model.getGeneratedClassQualifiedName();
+            JavaFileObject file = filer.createSourceFile(name, pkg);
             try (Writer writer = file.openWriter()) {
-                writer.write(model.getTemplate().getInstanceOf("main").add("model", model).render());
+                writer.write(STG.getInstanceOf("main").add("model", model).render());
             }
         }
     }
@@ -62,9 +61,9 @@ public final class SimpleMappersProcessor extends BaseProcessor {
     static final class Model {
         private final ProcessingEnvironment env;
         private final PackageElement pkg;
-        private final SimpleMapper annotation;
+        private final SimpleCollectionMapper annotation;
 
-        Model(ProcessingEnvironment env, PackageElement pkg, SimpleMapper annotation) {
+        Model(ProcessingEnvironment env, PackageElement pkg, SimpleCollectionMapper annotation) {
             this.env = env;
             this.pkg = pkg;
             this.annotation = annotation;
@@ -75,15 +74,11 @@ public final class SimpleMappersProcessor extends BaseProcessor {
          * CollectionMapper}.
          */
         public String getGeneratedClassSimpleName() {
-            if (!annotation.name().isEmpty()) {
-                return annotation.name();
+            TypeMirror type = getTargetDeclaredType();
+            if (type.toString().equals(Void.class.getCanonicalName())) {
+                type = getTargetType();
             }
-            TypeMirror type = getTargetType();
-            String name = env.getTypeUtils().asElement(type).getSimpleName().toString() + "Mapper";
-            if (type.getKind().isPrimitive()) {
-                name = name.substring(0, 1).toUpperCase(ENGLISH) + name.substring(1);
-            }
-            return name;
+            return env.getTypeUtils().asElement(type).getSimpleName().toString() + "Mapper";
         }
 
         /**
@@ -95,49 +90,43 @@ public final class SimpleMappersProcessor extends BaseProcessor {
         }
 
         /**
-         * The fully qualified name of {@link SimpleMapper#value()}.
+         * Gets the fully qualified name of {@link SimpleCollectionMapper#declareAs()}.
+         */
+        public String getDeclaredTypeQualifiedName() {
+            TypeMirror type = getTargetDeclaredType();
+            if (type.toString().equals(Void.class.getCanonicalName())) {
+                return getTargetType().toString();
+            }
+            return type.toString();
+        }
+
+        /**
+         * The fully qualified name of {@link SimpleCollectionMapper#value()}.
          */
         public String getTargetTypeQualifiedName() {
             return getTargetType().toString();
         }
 
-        STGroup getTemplate() {
-            return getTargetType().getKind().isPrimitive() ? STG_PRIMITIVE : STG_OBJECT;
-        }
-
         public String getProcessorClassName() {
-            return SimpleMappersProcessor.class.getCanonicalName();
+            return SimpleCollectionMappersProcessor.class.getCanonicalName();
         }
 
         public String getPackageName() {
             return pkg.getQualifiedName().toString();
         }
 
-        public String getParsingSource() {
-            if (!annotation.parse().isEmpty()) {
-                return annotation.parse();
-            }
-            String sub;
-            TypeMirror type = getTargetType();
-            if (type.getKind().isPrimitive()) {
-                sub = type.toString();
-                sub = sub.substring(0, 1).toUpperCase(ENGLISH) + sub.substring(1);
-            } else {
-                sub = env.getTypeUtils().asElement(type).getSimpleName().toString();
-            }
-            return "parser.get" + sub + "()";
-        }
-
-        public String getGeneratingSource() {
-            if (!annotation.generate().isEmpty()) {
-                return annotation.generate();
-            }
-            return "generator.writeValue(value)";
-        }
-
         private TypeMirror getTargetType() {
             try {
                 annotation.value();
+                throw new RuntimeException("Failed to get annotation type mirror");
+            } catch (MirroredTypeException e) {
+                return e.getTypeMirror();
+            }
+        }
+
+        private TypeMirror getTargetDeclaredType() {
+            try {
+                annotation.declareAs();
                 throw new RuntimeException("Failed to get annotation type mirror");
             } catch (MirroredTypeException e) {
                 return e.getTypeMirror();

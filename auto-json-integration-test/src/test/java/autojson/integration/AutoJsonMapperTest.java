@@ -173,11 +173,6 @@ public abstract class AutoJsonMapperTest extends MapperTest {
         });
     }
 
-    @SafeVarargs
-    private static <T> Set<T> set(T... args) {
-        return Sets.newHashSet(args);
-    }
-
     public AutoJsonMapperTest(Mapper<Object> mapper, Object object, String json) {
         super(mapper, object, json);
     }
