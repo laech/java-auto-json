@@ -9,7 +9,7 @@
         @SimpleCollectionMapper(HashSet.class),
         @SimpleCollectionMapper(TreeSet.class),
         @SimpleCollectionMapper(LinkedHashSet.class),
-}) // TODO test each of these
+})
 package autojson.internal.bind.java.util;
 
 import autojson.internal.SimpleCollectionMapper;

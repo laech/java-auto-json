@@ -14,6 +14,7 @@ import org.junit.runners.Parameterized;
 import javax.xml.bind.JAXB;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,24 +36,48 @@ public abstract class MapperTest {
     }
 
     @Parameterized.Parameters(name = "{0} {1}")
-    public static Collection<Object[]> data() throws Exception {
+    public static Collection<Object[]> data() {
         List<Object[]> data = new ArrayList<>();
         URL url = MapperTest.class.getResource("tests.xml");
         TestCases tests = JAXB.unmarshal(url, TestCases.class);
 
         for (TestCase test : tests.getTests()) {
-
-            Class<?> mapper = Class.forName(test.getMapper());
-            for (String expect : test.getCases()) {
-                data.add(new Object[]{mapper.newInstance(), expect, expect});
-            }
-
-            for (TestCaseIo io : test.getIocases()) {
-                data.add(new Object[]{mapper.newInstance(), io.getOutput(), io.getInput()});
+            try {
+                add(data, test);
+            } catch (ReflectiveOperationException e) {
+                throw new RuntimeException("Failed to initiate "
+                        + test.getMapper() + " "
+                        + test.getWrappers());
             }
         }
 
         return data;
+    }
+
+    private static void add(List<Object[]> data, TestCase test) throws ReflectiveOperationException {
+        Object mapper = Class.forName(test.getMapper()).newInstance();
+
+        if (!test.getWrappers().isEmpty()) {
+            for (String wrapperClass : test.getWrappers()) {
+                Constructor<?> constructor = Class.forName(wrapperClass).getConstructor(Mapper.class);
+                Object wrapper = constructor.newInstance(mapper);
+                for (String expect : test.getCases()) {
+                    data.add(new Object[]{wrapper, expect, expect});
+                }
+                for (TestCaseIo io : test.getIocases()) {
+                    data.add(new Object[]{mapper, io.getOutput(), io.getInput()});
+                }
+            }
+        } else {
+
+            for (String expect : test.getCases()) {
+                data.add(new Object[]{mapper, expect, expect});
+            }
+
+            for (TestCaseIo io : test.getIocases()) {
+                data.add(new Object[]{mapper, io.getOutput(), io.getInput()});
+            }
+        }
     }
 
     @Test

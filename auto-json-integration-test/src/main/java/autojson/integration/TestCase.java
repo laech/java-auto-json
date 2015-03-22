@@ -9,8 +9,18 @@ public class TestCase {
 
     private String mapper;
 
+    private List<String> wrappers = new ArrayList<>();
     private List<String> cases = new ArrayList<>();
     private List<TestCaseIo> iocases = new ArrayList<>();
+
+    @XmlElement(name = "wrapper")
+    public List<String> getWrappers() {
+        return wrappers;
+    }
+
+    public void setWrappers(List<String> wrappers) {
+        this.wrappers = wrappers;
+    }
 
     @XmlAttribute(name = "class")
     public String getMapper() {
@@ -38,4 +48,5 @@ public class TestCase {
     public void setIocases(List<TestCaseIo> iocases) {
         this.iocases = iocases;
     }
+
 }

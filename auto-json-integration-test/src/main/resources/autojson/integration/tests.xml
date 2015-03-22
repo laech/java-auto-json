@@ -1,5 +1,26 @@
 <tests>
 
+    <!--
+
+    <test class="mapper class to be tested">
+        <wrapper>if the cases are JSON arrays, this is the wrapper collection mapper</wrapper>
+        <case>
+            Mapper (or wrapper class if specified) should be able read and
+            generate this exact JSON string. Multiple cases can be specified,
+            if multiple wrapper classes are specified all combination of all
+            wrappers and cases will be tested.
+        </case>
+
+        <iocase>
+            <input>Use when input/output are different</input>
+            <output>If expected output is different from input, the is the expected output</output>
+        </iocase>
+    </test>
+
+    -->
+
+    <!-- java.lang.Boolean/boolean -->
+
     <test class="autojson.internal.bind.java.lang.BooleanMapper">
         <case>null</case>
         <case>true</case>
@@ -10,6 +31,19 @@
         <case>true</case>
         <case>false</case>
     </test>
+
+    <test class="autojson.integration.AutoJson_ObjectBoolean">
+        <case>{"value":null}</case>
+        <case>{"value":false}</case>
+        <case>{"value":true}</case>
+    </test>
+
+    <test class="autojson.integration.AutoJson_PrimitiveBoolean">
+        <case>{"value":false}</case>
+        <case>{"value":true}</case>
+    </test>
+
+    <!-- java.lang.Integer/int -->
 
     <test class="autojson.internal.bind.java.lang.IntegerMapper">
         <case>null</case>
@@ -28,6 +62,21 @@
         <case>-2147483648</case><!-- Integer.MIN_VALUE -->
     </test>
 
+    <test class="autojson.integration.AutoJson_ObjectInt">
+        <case>{"value":null}</case>
+        <case>{"value":0}</case>
+        <case>{"value":2147483647}</case>
+        <case>{"value":-2147483648}</case>
+    </test>
+
+    <test class="autojson.integration.AutoJson_PrimitiveInt">
+        <case>{"value":0}</case>
+        <case>{"value":2147483647}</case>
+        <case>{"value":-2147483648}</case>
+    </test>
+
+    <!-- java.lang.Long/long -->
+
     <test class="autojson.internal.bind.java.lang.LongMapper">
         <case>null</case>
         <case>-1</case>
@@ -45,6 +94,21 @@
         <case>-9223372036854775808</case><!-- Long.MIN_VALUE -->
     </test>
 
+    <test class="autojson.integration.AutoJson_PrimitiveLong">
+        <case>{"value":0}</case>
+        <case>{"value":9223372036854775807}</case>
+        <case>{"value":-9223372036854775808}</case>
+    </test>
+
+    <test class="autojson.integration.AutoJson_ObjectLong">
+        <case>{"value":null}</case>
+        <case>{"value":0}</case>
+        <case>{"value":9223372036854775807}</case>
+        <case>{"value":-9223372036854775808}</case>
+    </test>
+
+    <!-- java.lang.String -->
+
     <test class="autojson.internal.bind.java.lang.StringMapper">
         <case>null</case>
         <case>""</case>
@@ -52,6 +116,14 @@
         <case>"abc"</case>
         <case>"hello world"</case>
     </test>
+
+    <test class="autojson.integration.AutoJson_ObjectString">
+        <case>{"value":null}</case>
+        <case>{"value":""}</case>
+        <case>{"value":"hello"}</case>
+    </test>
+
+    <!-- java.math.BigDecimal -->
 
     <test class="autojson.internal.bind.java.math.BigDecimalMapper">
         <case>null</case>
@@ -70,49 +142,6 @@
         <case>9223372036854775807087837637826486872364723478633864832648732684</case>
     </test>
 
-    <test class="autojson.integration.AutoJson_PrimitiveInt">
-        <case>{"value":0}</case>
-        <case>{"value":2147483647}</case>
-        <case>{"value":-2147483648}</case>
-    </test>
-
-    <test class="autojson.integration.AutoJson_ObjectInt">
-        <case>{"value":null}</case>
-        <case>{"value":0}</case>
-        <case>{"value":2147483647}</case>
-        <case>{"value":-2147483648}</case>
-    </test>
-
-    <test class="autojson.integration.AutoJson_PrimitiveLong">
-        <case>{"value":0}</case>
-        <case>{"value":9223372036854775807}</case>
-        <case>{"value":-9223372036854775808}</case>
-    </test>
-
-    <test class="autojson.integration.AutoJson_ObjectLong">
-        <case>{"value":null}</case>
-        <case>{"value":0}</case>
-        <case>{"value":9223372036854775807}</case>
-        <case>{"value":-9223372036854775808}</case>
-    </test>
-
-    <test class="autojson.integration.AutoJson_PrimitiveBoolean">
-        <case>{"value":false}</case>
-        <case>{"value":true}</case>
-    </test>
-
-    <test class="autojson.integration.AutoJson_ObjectBoolean">
-        <case>{"value":null}</case>
-        <case>{"value":false}</case>
-        <case>{"value":true}</case>
-    </test>
-
-    <test class="autojson.integration.AutoJson_ObjectString">
-        <case>{"value":null}</case>
-        <case>{"value":""}</case>
-        <case>{"value":"hello"}</case>
-    </test>
-
     <test class="autojson.integration.AutoJson_ObjectBigDecimal">
         <case>{"value":0}</case>
         <case>{"value":9.9}</case>
@@ -121,6 +150,8 @@
         <case>{"value":1E+100}</case>
         <case>{"value":1E-1000}</case>
     </test>
+
+    <!-- Nesting of AutoJson objects -->
 
     <test class="autojson.integration.AutoJson_ObjectNestedAutoJson">
         <case>{"value":null}</case>
@@ -131,18 +162,22 @@
         <case>{"stringValue":{"value":"a"},"intValue":{"value":1},"longValue":100}</case>
     </test>
 
+    <!-- Empty AutoJson object -->
     <test class="autojson.integration.AutoJson_ObjectEmpty">
         <case>{}</case>
     </test>
 
+    <!-- AutoJson object declared as static inner class -->
     <test class="autojson.integration.AutoJson_ObjectStaticInnerClass_Inner">
         <case>{"value":"hello world"}</case>
     </test>
 
+    <!-- AutoJson object needs to be public to be accessible in other packages -->
     <test class="autojson.integration.sub.AutoJson_CrossPackageObject">
         <case>{"value":101}</case>
     </test>
 
+    <!-- Able to handle JSON keys with spaces -->
     <test class="autojson.integration.AutoJson_ObjectNameWithSpace">
         <case>{"key with spaces":"a"}</case>
     </test>
@@ -150,6 +185,49 @@
     <!-- Example from https://tools.ietf.org/html/rfc7159 -->
     <test class="autojson.integration.AutoJson_ObjectImage">
         <case>{"Image":{"Width":800,"Height":600,"Title":"View from 15th Floor","Thumbnail":{"Url":"http://www.example.com/image/481989943","Height":125,"Width":100},"Animated":false,"IDs":[116,943,234,38793]}}</case>
+    </test>
+
+    <!-- Collections -->
+
+    <test class="autojson.internal.bind.java.lang.IntegerMapper">
+        <wrapper>autojson.internal.bind.java.util.ArrayListMapper</wrapper>
+        <wrapper>autojson.internal.bind.java.util.LinkedListMapper</wrapper>
+        <wrapper>autojson.internal.bind.java.util.ListMapper</wrapper>
+        <wrapper>autojson.internal.bind.java.util.CollectionMapper</wrapper>
+        <case>null</case>
+        <case>[]</case>
+        <case>[1]</case>
+        <case>[1,2]</case>
+        <case>[1,2,3]</case>
+        <case>[1,2,3,4]</case>
+        <case>[null]</case>
+        <case>[null,null]</case>
+        <case>[null,1,4,null,19938,-9]</case>
+    </test>
+
+    <test class="autojson.internal.bind.java.lang.LongMapper">
+        <wrapper>autojson.internal.bind.java.util.HashSetMapper</wrapper>
+        <wrapper>autojson.internal.bind.java.util.SetMapper</wrapper>
+        <case>null</case>
+        <case>[]</case>
+        <case>[1]</case>
+        <case>[1,2]</case>
+        <case>[1,2,3]</case>
+        <case>[1,2,3,4]</case>
+        <case>[null]</case>
+        <case>[null,1,-9]</case>
+    </test>
+
+    <test class="autojson.internal.bind.java.lang.IntegerMapper">
+        <wrapper>autojson.internal.bind.java.util.TreeSetMapper</wrapper>
+        <wrapper>autojson.internal.bind.java.util.SortedSetMapper</wrapper>
+        <wrapper>autojson.internal.bind.java.util.NavigableSetMapper</wrapper>
+        <case>null</case>
+        <case>[]</case>
+        <case>[1]</case>
+        <case>[1,2]</case>
+        <case>[1,2,3]</case>
+        <case>[1,2,3,4]</case>
     </test>
 
     <test class="autojson.integration.AutoJson_ObjectListObject">
@@ -168,6 +246,11 @@
         <case>{"values":[[[1,2]],[[3]],[[4]]]}</case>
     </test>
 
+    <test class="autojson.integration.AutoJson_ObjectCollections">
+        <case>{"arrayList":[],"linkedList":[],"list":[],"hashSet":[],"linkedHashSet":[],"treeSet":[],"sortedSet":[],"navigableSet":[],"set":[],"collection":[]}</case>
+    </test>
+
+    <!-- Unknown properties can be skipped -->
     <test class="autojson.integration.AutoJson_ObjectString">
         <iocase>
             <input>

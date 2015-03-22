@@ -17,6 +17,7 @@ import autojson.internal.bind.java.util.LinkedListMapper;
 import autojson.internal.bind.java.util.ListMapper;
 import autojson.internal.bind.java.util.NavigableSetMapper;
 import autojson.internal.bind.java.util.SetMapper;
+import autojson.internal.bind.java.util.SortedSetMapper;
 import autojson.internal.bind.java.util.TreeSetMapper;
 
 import javax.annotation.processing.ProcessingEnvironment;
@@ -35,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NavigableSet;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import static autojson.TemplateModel.getGeneratedTypeName;
@@ -62,6 +64,7 @@ final class Variable {
         mappers.put(LinkedHashSet.class.getCanonicalName(), LinkedHashSetMapper.class.getCanonicalName());
         mappers.put(TreeSet.class.getCanonicalName(), TreeSetMapper.class.getCanonicalName());
         mappers.put(NavigableSet.class.getCanonicalName(), NavigableSetMapper.class.getCanonicalName());
+        mappers.put(SortedSet.class.getCanonicalName(), SortedSetMapper.class.getCanonicalName());
         mappers.put(Set.class.getCanonicalName(), SetMapper.class.getCanonicalName());
         mappers.put(Collection.class.getCanonicalName(), CollectionMapper.class.getCanonicalName());
     }
@@ -143,10 +146,9 @@ final class Variable {
     private List<TypeMirror> unwrap(TypeMirror type, List<TypeMirror> result) {
         result.add(type);
         if (type instanceof DeclaredType) {
-            TypeElement element = (TypeElement) env.getTypeUtils().asElement(type);
-            String name = element.getQualifiedName().toString();
-            if (name.equals(Set.class.getCanonicalName()) || name.equals(List.class.getCanonicalName())) {
-                TypeMirror arg = ((DeclaredType) type).getTypeArguments().get(0);
+            List<? extends TypeMirror> args = ((DeclaredType) type).getTypeArguments();
+            if (args.size() == 1) {
+                TypeMirror arg = args.get(0);
                 unwrap(arg, result);
             }
         }
