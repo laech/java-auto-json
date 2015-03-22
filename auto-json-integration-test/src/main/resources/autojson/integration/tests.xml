@@ -1,0 +1,199 @@
+<tests>
+
+    <test class="autojson.internal.bind.java.lang.BooleanMapper">
+        <case>null</case>
+        <case>true</case>
+        <case>false</case>
+    </test>
+
+    <test class="autojson.internal.bind.java.lang.PrimitiveBooleanMapper">
+        <case>true</case>
+        <case>false</case>
+    </test>
+
+    <test class="autojson.internal.bind.java.lang.IntegerMapper">
+        <case>null</case>
+        <case>-1</case>
+        <case>0</case>
+        <case>1</case>
+        <case>2147483647</case><!-- Integer.MAX_VALUE -->
+        <case>-2147483648</case><!-- Integer.MIN_VALUE -->
+    </test>
+
+    <test class="autojson.internal.bind.java.lang.PrimitiveIntMapper">
+        <case>-1</case>
+        <case>0</case>
+        <case>1</case>
+        <case>2147483647</case><!-- Integer.MAX_VALUE -->
+        <case>-2147483648</case><!-- Integer.MIN_VALUE -->
+    </test>
+
+    <test class="autojson.internal.bind.java.lang.LongMapper">
+        <case>null</case>
+        <case>-1</case>
+        <case>0</case>
+        <case>1</case>
+        <case>9223372036854775807</case><!-- Long.MAX_VALUE -->
+        <case>-9223372036854775808</case><!-- Long.MIN_VALUE -->
+    </test>
+
+    <test class="autojson.internal.bind.java.lang.PrimitiveLongMapper">
+        <case>-1</case>
+        <case>0</case>
+        <case>1</case>
+        <case>9223372036854775807</case><!-- Long.MAX_VALUE -->
+        <case>-9223372036854775808</case><!-- Long.MIN_VALUE -->
+    </test>
+
+    <test class="autojson.internal.bind.java.lang.StringMapper">
+        <case>null</case>
+        <case>""</case>
+        <case>"null"</case>
+        <case>"abc"</case>
+        <case>"hello world"</case>
+    </test>
+
+    <test class="autojson.internal.bind.java.math.BigDecimalMapper">
+        <case>null</case>
+        <case>2147483647</case><!-- Integer.MAX_VALUE -->
+        <case>-2147483648</case><!-- Integer.MIN_VALUE -->
+        <case>2147483648</case><!-- Integer.MAX_VALUE + 1-->
+        <case>-2147483649</case><!-- Integer.MIN_VALUE - 1 -->
+        <case>9223372036854775807</case><!-- Long.MAX_VALUE -->
+        <case>-9223372036854775808</case><!-- Long.MIN_VALUE -->
+        <case>9223372036854775808</case><!-- Long.MAX_VALUE + 1 -->
+        <case>-9223372036854775809</case><!-- Long.MIN_VALUE - 1 -->
+        <case>3.4028235E+38</case><!-- Float.MAX_VALUE -->
+        <case>1.4E-45</case><!-- Float.MIN_VALUE -->
+        <case>1.7976931348623157E+308</case><!-- Double.MAX_VALUE -->
+        <case>4.9E-324</case><!-- Double.MIN_VALUE -->
+        <case>9223372036854775807087837637826486872364723478633864832648732684</case>
+    </test>
+
+    <test class="autojson.integration.AutoJson_PrimitiveInt">
+        <case>{"value":0}</case>
+        <case>{"value":2147483647}</case>
+        <case>{"value":-2147483648}</case>
+    </test>
+
+    <test class="autojson.integration.AutoJson_ObjectInt">
+        <case>{"value":null}</case>
+        <case>{"value":0}</case>
+        <case>{"value":2147483647}</case>
+        <case>{"value":-2147483648}</case>
+    </test>
+
+    <test class="autojson.integration.AutoJson_PrimitiveLong">
+        <case>{"value":0}</case>
+        <case>{"value":9223372036854775807}</case>
+        <case>{"value":-9223372036854775808}</case>
+    </test>
+
+    <test class="autojson.integration.AutoJson_ObjectLong">
+        <case>{"value":null}</case>
+        <case>{"value":0}</case>
+        <case>{"value":9223372036854775807}</case>
+        <case>{"value":-9223372036854775808}</case>
+    </test>
+
+    <test class="autojson.integration.AutoJson_PrimitiveBoolean">
+        <case>{"value":false}</case>
+        <case>{"value":true}</case>
+    </test>
+
+    <test class="autojson.integration.AutoJson_ObjectBoolean">
+        <case>{"value":null}</case>
+        <case>{"value":false}</case>
+        <case>{"value":true}</case>
+    </test>
+
+    <test class="autojson.integration.AutoJson_ObjectString">
+        <case>{"value":null}</case>
+        <case>{"value":""}</case>
+        <case>{"value":"hello"}</case>
+    </test>
+
+    <test class="autojson.integration.AutoJson_ObjectBigDecimal">
+        <case>{"value":0}</case>
+        <case>{"value":9.9}</case>
+        <case>{"value":-0.3}</case>
+        <case>{"value":1E+10}</case>
+        <case>{"value":1E+100}</case>
+        <case>{"value":1E-1000}</case>
+    </test>
+
+    <test class="autojson.integration.AutoJson_ObjectNestedAutoJson">
+        <case>{"value":null}</case>
+        <case>{"value":{"value":"a"}}</case>
+    </test>
+
+    <test class="autojson.integration.AutoJson_ObjectNestedAutoJsonMulti">
+        <case>{"stringValue":{"value":"a"},"intValue":{"value":1},"longValue":100}</case>
+    </test>
+
+    <test class="autojson.integration.AutoJson_ObjectEmpty">
+        <case>{}</case>
+    </test>
+
+    <test class="autojson.integration.AutoJson_ObjectStaticInnerClass_Inner">
+        <case>{"value":"hello world"}</case>
+    </test>
+
+    <test class="autojson.integration.sub.AutoJson_CrossPackageObject">
+        <case>{"value":101}</case>
+    </test>
+
+    <test class="autojson.integration.AutoJson_ObjectNameWithSpace">
+        <case>{"key with spaces":"a"}</case>
+    </test>
+
+    <!-- Example from https://tools.ietf.org/html/rfc7159 -->
+    <test class="autojson.integration.AutoJson_ObjectImage">
+        <case>{"Image":{"Width":800,"Height":600,"Title":"View from 15th Floor","Thumbnail":{"Url":"http://www.example.com/image/481989943","Height":125,"Width":100},"Animated":false,"IDs":[116,943,234,38793]}}</case>
+    </test>
+
+    <test class="autojson.integration.AutoJson_ObjectListObject">
+        <case>{"values":[{"value":"a"},{"value":"b"}]}</case>
+    </test>
+
+    <test class="autojson.integration.AutoJson_ObjectSetObject">
+        <case>{"values":[{"value":1},{"value":2}]}</case>
+    </test>
+
+    <test class="autojson.integration.AutoJson_ObjectListSetObject">
+        <case>{"values":[[{"value":1},{"value":2}],[{"value":3}]]}</case>
+    </test>
+
+    <test class="autojson.integration.AutoJson_ObjectListListListInt">
+        <case>{"values":[[[1,2]],[[3]],[[4]]]}</case>
+    </test>
+
+    <test class="autojson.integration.AutoJson_ObjectString">
+        <iocase>
+            <input>
+                {
+                    "unknown1": 10,
+                    "unknown2": {
+                        "value": "a"
+                    },
+                    "unknown3": {
+                        "value": 2
+                    },
+                    "value":"skip unknowns",
+                    "unknown4": {
+                        "valueX": "x",
+                        "valueY": {
+                            "value1": 1,
+                            "value2": {
+                                "value2.1": 2.1
+                            },
+                            "value3": 3
+                        }
+                    }
+                }
+            </input>
+            <output>{"value":"skip unknowns"}</output>
+        </iocase>
+    </test>
+
+</tests>
