@@ -1,13 +1,13 @@
 package autojson.integration;
 
-import autojson.bind.java.lang.BooleanMapper;
-import autojson.bind.java.lang.IntegerMapper;
-import autojson.bind.java.lang.LongMapper;
-import autojson.bind.java.lang.PrimitiveBooleanMapper;
-import autojson.bind.java.lang.PrimitiveIntMapper;
-import autojson.bind.java.lang.PrimitiveLongMapper;
-import autojson.bind.java.lang.StringMapper;
-import autojson.bind.java.math.BigDecimalMapper;
+import autojson.internal.bind.java.lang.BooleanMapper;
+import autojson.internal.bind.java.lang.IntegerMapper;
+import autojson.internal.bind.java.lang.LongMapper;
+import autojson.internal.bind.java.lang.PrimitiveBooleanMapper;
+import autojson.internal.bind.java.lang.PrimitiveIntMapper;
+import autojson.internal.bind.java.lang.PrimitiveLongMapper;
+import autojson.internal.bind.java.lang.StringMapper;
+import autojson.internal.bind.java.math.BigDecimalMapper;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 

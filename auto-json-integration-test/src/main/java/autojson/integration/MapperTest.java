@@ -1,9 +1,9 @@
 package autojson.integration;
 
 import autojson.bind.Mapper;
-import autojson.bind.java.lang.PrimitiveBooleanMapper;
-import autojson.bind.java.lang.PrimitiveIntMapper;
-import autojson.bind.java.lang.PrimitiveLongMapper;
+import autojson.internal.bind.java.lang.PrimitiveBooleanMapper;
+import autojson.internal.bind.java.lang.PrimitiveIntMapper;
+import autojson.internal.bind.java.lang.PrimitiveLongMapper;
 import autojson.stream.JsonFactory;
 import autojson.stream.JsonGenerator;
 import autojson.stream.JsonParser;
