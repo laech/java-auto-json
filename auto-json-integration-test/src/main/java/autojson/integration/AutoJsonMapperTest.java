@@ -3,7 +3,6 @@ package autojson.integration;
 import autojson.bind.Mapper;
 import autojson.integration.sub.AutoJson_CrossPackageObject;
 import autojson.integration.sub.CrossPackageObject;
-import autovalue.shaded.com.google.common.common.collect.Sets;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
@@ -11,6 +10,7 @@ import org.junit.runners.Parameterized.Parameters;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 import static java.util.Arrays.asList;
@@ -116,10 +116,10 @@ public abstract class AutoJsonMapperTest extends MapperTest {
 
                 {
                         new AutoJson_ObjectSetObject(),
-                        new AutoValue_ObjectSetObject(Sets.<ObjectInt>newHashSet(
-                                new AutoValue_ObjectInt(1),
-                                new AutoValue_ObjectInt(2))
-                        ), "" +
+                        new AutoValue_ObjectSetObject(new HashSet<ObjectInt>() {{
+                            add(new AutoValue_ObjectInt(1));
+                            add(new AutoValue_ObjectInt(2));
+                        }}), "" +
                         "{" +
                         "\"values\":[" +
                         "{\"value\":1}," +
@@ -131,13 +131,13 @@ public abstract class AutoJsonMapperTest extends MapperTest {
                 {
                         new AutoJson_ObjectListSetObject(),
                         new AutoValue_ObjectListSetObject(Arrays.<Set<ObjectInt>>asList(
-                                Sets.<ObjectInt>newHashSet(
-                                        new AutoValue_ObjectInt(1),
-                                        new AutoValue_ObjectInt(2)
-                                ),
-                                Sets.<ObjectInt>newHashSet(
-                                        new AutoValue_ObjectInt(3)
-                                )
+                                new HashSet<ObjectInt>() {{
+                                    add(new AutoValue_ObjectInt(1));
+                                    add(new AutoValue_ObjectInt(2));
+                                }},
+                                new HashSet<ObjectInt>() {{
+                                    add(new AutoValue_ObjectInt(3));
+                                }}
                         )
                         ), "" +
                         "{" +

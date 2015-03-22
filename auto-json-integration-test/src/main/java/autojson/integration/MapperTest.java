@@ -12,7 +12,7 @@ import org.junit.Test;
 import java.io.StringReader;
 import java.io.StringWriter;
 
-import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertEquals;
 
 public abstract class MapperTest {
 
@@ -31,16 +31,16 @@ public abstract class MapperTest {
         JsonParser parser = factory().createParser(new StringReader(json));
 
         if (mapper instanceof Mapper) {
-            assertThat(((Mapper<?>) mapper).read(parser)).isEqualTo(object);
+            assertEquals(object, ((Mapper<?>) mapper).read(parser));
 
         } else if (mapper instanceof PrimitiveBooleanMapper) {
-            assertThat(((PrimitiveBooleanMapper) mapper).read(parser)).isEqualTo(object);
+            assertEquals(object, ((PrimitiveBooleanMapper) mapper).read(parser));
 
         } else if (mapper instanceof PrimitiveIntMapper) {
-            assertThat(((PrimitiveIntMapper) mapper).read(parser)).isEqualTo(object);
+            assertEquals(object, ((PrimitiveIntMapper) mapper).read(parser));
 
         } else if (mapper instanceof PrimitiveLongMapper) {
-            assertThat(((PrimitiveLongMapper) mapper).read(parser)).isEqualTo(object);
+            assertEquals(object, ((PrimitiveLongMapper) mapper).read(parser));
 
         } else {
             throw new AssertionError(mapper.toString());
@@ -70,7 +70,7 @@ public abstract class MapperTest {
         }
 
         generator.flush();
-        assertThat(writer.toString()).isEqualTo(json);
+        assertEquals(json, writer.toString());
     }
 
     protected abstract JsonFactory factory();

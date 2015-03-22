@@ -18,7 +18,6 @@ import autojson.internal.bind.java.util.ListMapper;
 import autojson.internal.bind.java.util.NavigableSetMapper;
 import autojson.internal.bind.java.util.SetMapper;
 import autojson.internal.bind.java.util.TreeSetMapper;
-import com.google.common.base.Strings;
 
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.TypeElement;
@@ -130,7 +129,9 @@ final class Variable {
             }
             creation.append("(");
         }
-        creation.append(Strings.repeat(")", mappers.size()));
+        for (int i = 0; i < mappers.size(); i++) {
+            creation.append(')');
+        }
 
         return MapperVar.create(type, name, creation.toString());
     }
