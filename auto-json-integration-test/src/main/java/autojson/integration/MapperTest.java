@@ -1,5 +1,6 @@
-package autojson.bind;
+package autojson.integration;
 
+import autojson.bind.Mapper;
 import autojson.bind.java.lang.PrimitiveBooleanMapper;
 import autojson.bind.java.lang.PrimitiveIntMapper;
 import autojson.bind.java.lang.PrimitiveLongMapper;

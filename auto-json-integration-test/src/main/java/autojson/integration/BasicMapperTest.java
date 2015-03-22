@@ -1,4 +1,4 @@
-package autojson.bind;
+package autojson.integration;
 
 import autojson.bind.java.lang.BooleanMapper;
 import autojson.bind.java.lang.IntegerMapper;

@@ -1,7 +1,6 @@
 package autojson.integration;
 
 import autojson.bind.Mapper;
-import autojson.bind.MapperTest;
 import autojson.integration.sub.AutoJson_CrossPackageObject;
 import autojson.integration.sub.CrossPackageObject;
 import autovalue.shaded.com.google.common.common.collect.Sets;
